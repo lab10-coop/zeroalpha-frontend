@@ -4,3 +4,17 @@
 @import '~bootstrap/scss/bootstrap.scss';
 
 // custom scss
+header {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+
+  & > h1 {
+    display: inline-block;
+  }
+}
+
+img {
+  width: 100%;
+  margin: 1rem 0;
+}
