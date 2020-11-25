@@ -7,7 +7,7 @@ const rpc = process.env.REACT_APP_CHAIN_RPC || '';
 const steAddr = process.env.REACT_APP_STE_ADDR || '';
 
 const web3 = new Web3(rpc);
-const stewardContract = new web3.eth.Contract(
+const stewardContract = (_web3: Web3 = web3): ArtSteward => new _web3.eth.Contract(
   ArtStewardJson.abi as AbiItem[],
   steAddr,
 ) as ArtSteward;

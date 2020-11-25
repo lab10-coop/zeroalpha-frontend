@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Onboard from 'bnc-onboard';
-import { Button } from 'reactstrap';
+import { Button, Input } from 'reactstrap';
 import { toChecksumAddress } from 'web3-utils';
+import Web3 from 'web3';
+import { UserState } from 'bnc-onboard/dist/src/interfaces';
 import stewardContract from './contract-instances/steward';
 import nftContract, { id as tokenId } from './contract-instances/nft';
 
@@ -25,7 +27,7 @@ export default function App(): JSX.Element {
     },
   });
 
-  const [address, setAddress] = useState<string | undefined>(undefined);
+  const [onboardState, setOnboardState] = useState<UserState>();
   const [name, setName] = useState<string>('');
   const [symbol, setSymbol] = useState<string>('');
   const [imageUrl, setImageUrl] = useState<string>('');
@@ -33,11 +35,12 @@ export default function App(): JSX.Element {
   const [artist, setArtist] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [collected, setCollected] = useState<string>('');
+  const [newResellPrice, setNewResellPrice] = useState<number>(0);
 
   const shortAddr = (addr: string): string => `${addr.substr(0, 6)}…${addr.substr(-4)}`;
 
   const fetchNftInfo = async () => {
-    const tokenUri = await nftContract.methods.tokenURI(tokenId).call();
+    const tokenUri = await nftContract().methods.tokenURI(tokenId).call();
     console.log(tokenUri);
 
     // todo: test this with a (cross-origin) working uri
@@ -49,8 +52,8 @@ export default function App(): JSX.Element {
       image: 'https://thisartworkisalwaysonsale.com/static/media/TAIAOS_2.9eff2894.png',
     };
 
-    const s = await nftContract.methods.symbol().call();
-    const o = await nftContract.methods.ownerOf(tokenId).call();
+    const s = await nftContract().methods.symbol().call();
+    const o = await nftContract().methods.ownerOf(tokenId).call();
 
     setName(metaDataJson.name);
     setSymbol(s);
@@ -59,9 +62,9 @@ export default function App(): JSX.Element {
   };
 
   const fetchStewardInfo = async () => {
-    const a = await stewardContract.methods.artist().call();
-    const p = await stewardContract.methods.price().call();
-    const c = await stewardContract.methods.totalCollected().call();
+    const a = await stewardContract().methods.artist().call();
+    const p = await stewardContract().methods.price().call();
+    const c = await stewardContract().methods.totalCollected().call();
 
     setArtist(a);
     setPrice(p);
@@ -79,7 +82,20 @@ export default function App(): JSX.Element {
       return;
     }
     await onboard.walletCheck();
-    setAddress(onboard.getState().address);
+    setOnboardState(onboard.getState());
+  };
+
+  const saveNewResellPrice = async () => {
+    if (!onboardState) {
+      alert('No wallet connected.');
+      return;
+    }
+    console.log('provider', onboard, onboard.getState(), onboard.getState().wallet.provider);
+    const web3 = new Web3(onboardState.wallet.provider);
+    await stewardContract(web3).methods.changePrice(newResellPrice).send({
+      from: onboardState.address,
+    });
+    alert('Price set.');
   };
 
   return (
@@ -89,11 +105,11 @@ export default function App(): JSX.Element {
         <h1>ZeroAlpha</h1>
 
         <Button color="primary" onClick={() => connectWallet()}>
-          {(!address) ? (
+          {(!onboardState) ? (
             <span>Connect wallet</span>
           ) : (
             <span title="Switch wallet">
-              {shortAddr(toChecksumAddress(address))}
+              {shortAddr(toChecksumAddress(onboardState.address))}
             </span>
           )}
         </Button>
@@ -137,8 +153,13 @@ export default function App(): JSX.Element {
       </p>
 
       <p>
-        change:
-        *todo*
+        Change re-sale price
+        <Input
+          type="text"
+          value={newResellPrice}
+          onChange={(event) => setNewResellPrice(parseInt(event.currentTarget.value, 10))}
+        />
+        <Button onClick={() => saveNewResellPrice()}>Save</Button>
       </p>
 
     </div>
