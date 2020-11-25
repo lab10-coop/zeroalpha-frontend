@@ -6,6 +6,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "typechain": "typechain --target web3-v1 --outDir src/contract-types/ './src/abi/*'",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint 'src/**/*.{ts,tsx}'"
   },
@@ -45,6 +46,8 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
     "react-scripts": "^4.0.1",
+    "typechain": "^4.0.0",
+    "typechain-target-web3-v1": "^1.0.4",
     "typescript": "^4.1.2"
   },
   "dependencies": {
@@ -55,6 +58,7 @@
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "reactstrap": "^8.7.1",
-    "web3": "^1.3.0"
+    "web3": "^1.3.0",
+    "web3-utils": "^1.3.0"
   }
 }

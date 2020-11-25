@@ -11,11 +11,19 @@ run
 
 Install node & npm.
 
+Copy `.env-sample` to `.env` and config environment variables.
+
 Run `npm install` to install dependencies.
 
 Run `npm run build` to build.
 
 Run `npm run start` to run with auto restart for development.
+
+
+update contract-types
+---------------------
+
+When updating abi json files run `npm run typechain` to update contract-types.
 
 
 license
