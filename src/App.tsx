@@ -43,6 +43,7 @@ export default function App(): JSX.Element {
   const [changePriceShow, setChangePriceShow] = useState<boolean>(false);
   const [adjustDateShow, setAdjustDateShow] = useState<boolean>(false);
   const [buyShow, setBuyShow] = useState<boolean>(false);
+  const [showMore, setShowMore] = useState<boolean>(false);
 
   const shortAddr = (addr: string): string => `${addr.substr(0, 6)}…${addr.substr(-4)}`;
 
@@ -139,42 +140,11 @@ export default function App(): JSX.Element {
     await init();
     setBuyShow(false);
   };
-  /*
-  return (
-    <div className="container">
 
-      <p>
-        buy:
-        *todo*
-      </p>
-
-      <p>
-        adjust:
-        *todo*
-      </p>
-
-      <p>
-        Change re-sale price
-        <Input
-          type="text"
-          value={newResellPrice}
-          onChange={(event) => setNewResellPrice(parseInt(event.currentTarget.value, 10))}
-        />
-        <Button onClick={() => saveNewResellPrice()}>Save</Button>
-      </p>
-
-    </div>
-  );
-  */
-
-  // todo: make more text work
-  // todo: make scroll to work
-  // todo: make buttons overlays work
   // todo: ens owner
   // todo: use name from contract somewhere?
   // todo: show symbol somewhere?
   // todo: show beneficiary address somewhere?
-  // todo: close overlays!
   return (
     <div>
       <header>
@@ -246,9 +216,11 @@ export default function App(): JSX.Element {
                   (VCUs) on the Verra registry and minted to the blockchain as an
                   NFT.
                   <br />
-                  <span id="showMore">show more</span>
+                  {!showMore && (
+                    <button id="showMore" type="button" onClick={() => setShowMore(true)}>show more</button>
+                  )}
                 </p>
-                <p className="showMoreText">
+                <p className={showMore ? 'showMoreText show' : 'showMoreText'}>
                   The amount of CO2 offset by this NFT is equivalent to the
                   emissions that person living in an industrialized country would
                   emit over the course of 40 years. To give context, the typical
@@ -261,7 +233,9 @@ export default function App(): JSX.Element {
                   the creation of this NFT. To read more about these projects and
                   their co-benefits, visit Offsetra’s website here.
                   <br />
-                  <span id="showLess">show less</span>
+                  {showMore && (
+                    <button id="showLess" type="button" onClick={() => setShowMore(false)}>show less</button>
+                  )}
                 </p>
               </div>
 
@@ -455,7 +429,7 @@ export default function App(): JSX.Element {
 
         <div className={changePriceShow ? 'overlayBox show' : 'overlayBox'}>
           <div className="innerBox">
-            <div className="close">X</div>
+            <button className="close" type="button" onClick={() => setChangePriceShow(false)}>X</button>
             <h3>Change Price</h3>
             <form>
               <input
@@ -479,7 +453,7 @@ export default function App(): JSX.Element {
 
         <div className={adjustDateShow ? 'overlayBox show' : 'overlayBox'}>
           <div className="innerBox">
-            <div className="close">X</div>
+            <button className="close" type="button" onClick={() => setAdjustDateShow(false)}>X</button>
             <h3>Adjust Date</h3>
             <form>
               <input type="text" name="XYZ" placeholder="123456" />
@@ -490,7 +464,7 @@ export default function App(): JSX.Element {
 
         <div className={buyShow ? 'overlayBox show' : 'overlayBox'}>
           <div className="innerBox">
-            <div className="close">X</div>
+            <button className="close" type="button" onClick={() => setBuyShow(false)}>X</button>
             <h3>Buy</h3>
             <form>
               <input
