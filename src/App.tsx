@@ -12,24 +12,23 @@ import ownerImg from './image/owner.png';
 const networkId = parseInt(process.env.REACT_APP_CHAIN_N_ID || '', 10);
 const rpc = process.env.REACT_APP_CHAIN_RPC || '';
 const currencyUnit = process.env.REACT_APP_CURRENCY_UNI || 'xDai';
+const onboard = Onboard({
+  networkId,
+  walletSelect: {
+    wallets: [
+      { walletName: 'metamask', preferred: true },
+      {
+        walletName: 'walletConnect',
+        rpc: {
+          [networkId]: rpc,
+        },
+        preferred: true,
+      },
+    ],
+  },
+});
 
 export default function App(): JSX.Element {
-  const onboard = Onboard({
-    networkId,
-    walletSelect: {
-      wallets: [
-        { walletName: 'metamask', preferred: true },
-        {
-          walletName: 'walletConnect',
-          rpc: {
-            [networkId]: rpc,
-          },
-          preferred: true,
-        },
-      ],
-    },
-  });
-
   const [onboardState, setOnboardState] = useState<UserState>();
   const [name, setName] = useState<string>('');
   const [symbol, setSymbol] = useState<string>('');
@@ -38,7 +37,7 @@ export default function App(): JSX.Element {
   const [artist, setArtist] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [collected, setCollected] = useState<string>('');
-  const [newResellPrice, setNewResellPrice] = useState<number>(0);
+  const [newResellPrice, setNewResellPrice] = useState<string>();
   const [newPrice, setNewPrice] = useState<string>();
   const [buyDeposit, setBuyDeposit] = useState<string>();
   const [changePriceShow, setChangePriceShow] = useState<boolean>(false);
@@ -88,7 +87,7 @@ export default function App(): JSX.Element {
     init();
   }, []);
 
-  const connectWallet = async () => {
+  const connectWallet = async (): Promise<void> => {
     const selectResult = await onboard.walletSelect();
     if (!selectResult) {
       return;
@@ -99,19 +98,28 @@ export default function App(): JSX.Element {
 
   const saveNewResellPrice = async () => {
     if (!onboardState) {
+      // todo: connectWallet
       alert('No wallet connected.');
       return;
     }
-    console.log('provider', onboard, onboard.getState(), onboard.getState().wallet.provider);
+    if (!newResellPrice) {
+      alert('new price not set.');
+      return;
+    }
     const web3 = new Web3(onboardState.wallet.provider);
-    await stewardContract(web3).methods.changePrice(newResellPrice).send({
+    await stewardContract(web3).methods.changePrice(toWei(newResellPrice)).send({
+      // todo: make gasPrice configurable?
+      gasPrice: toWei('100', 'gwei'),
       from: onboardState.address,
     });
-    alert('Price set.');
+    setNewResellPrice(undefined);
+    await init();
+    setChangePriceShow(false);
   };
 
   const buy = async () => {
     if (!onboardState) {
+      // todo: connectWallet
       alert('No wallet connected.');
       return;
     }
@@ -119,7 +127,6 @@ export default function App(): JSX.Element {
       alert('new price or deposit not set.');
       return;
     }
-    console.log('provider', onboard, onboard.getState(), onboard.getState().wallet.provider);
     const web3 = new Web3(onboardState.wallet.provider);
     await stewardContract(web3).methods.buy(toWei(newPrice), price).send({
       // todo: make gasPrice configurable?
@@ -283,7 +290,7 @@ export default function App(): JSX.Element {
                   &nbsp;
                   <span className="currency">{currencyUnit}</span>
                   {' '}
-                  {onboardState && onboardState.address.toLowerCase() === owner && (
+                  {onboardState && onboardState.address.toLowerCase() === owner.toLowerCase() && (
                     <button className="changePrice" type="button" onClick={() => setChangePriceShow(true)}>
                       change
                     </button>
@@ -324,7 +331,7 @@ export default function App(): JSX.Element {
                     Till&nbsp;
                     <span className="patronageUntil">31.12.2021</span>
                     {' '}
-                    {onboardState && onboardState.address.toLowerCase() === owner && (
+                    {onboardState && onboardState.address.toLowerCase() === owner.toLowerCase() && (
                       <button className="adjustDate" type="button" onClick={() => setAdjustDateShow(true)}>
                         adjust
                       </button>
@@ -451,8 +458,21 @@ export default function App(): JSX.Element {
             <div className="close">X</div>
             <h3>Change Price</h3>
             <form>
-              <input type="text" name="XYZ" placeholder="123456" />
-              <input type="submit" value="Set price" />
+              <input
+                type="text"
+                name="salePrice"
+                placeholder="new price"
+                value={newResellPrice}
+                onChange={(event) => setNewResellPrice(event.currentTarget.value)}
+              />
+              <input
+                type="submit"
+                onClick={(e) => {
+                  e.preventDefault();
+                  saveNewResellPrice();
+                }}
+                value="Set price"
+              />
             </form>
           </div>
         </div>
