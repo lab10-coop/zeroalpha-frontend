@@ -33,6 +33,9 @@
     "NFT"
   ],
   "author": "Peter Grassberger <peter.grassberger@lab10.coop> (https://petergrassberger.com/)",
+  "contributors": [
+    "Markus Bernsteiner <contact@seliqui.eu> (https://seliqui.eu/)"
+  ],
   "license": "AGPL-3.0-or-later",
   "devDependencies": {
     "@types/react": "^17.0.0",

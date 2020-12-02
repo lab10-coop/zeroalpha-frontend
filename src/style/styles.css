@@ -1,0 +1,655 @@
+/* vietnamese */
+@font-face {
+  font-family: 'Messapia';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Messapia Regular'), local('Messapia-Regular'), url(../font/Messapia-Regular.woff2) format('woff2');
+}
+
+/* vietnamese */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(../font/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32KxfXBiAJpp_c.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(../font/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32KxfXBiEJpp_c.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(../font/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32KxfXBi8Jpg.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(../font/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K0nXBiAJpp_c.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(../font/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K0nXBiEJpp_c.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(../font/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K0nXBi8Jpg.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(../font/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K5fQBiAJpp_c.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(../font/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K5fQBiEJpp_c.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(../font/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K5fQBi8Jpg.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(../font/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K67QBiAJpp_c.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(../font/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K67QBiEJpp_c.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(../font/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K67QBi8Jpg.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+
+
+
+
+html,
+body {
+  height: auto;
+  min-height: 100%;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 19px;
+  line-height: 30px;
+  color: #000000;
+
+  position: relative;
+}
+
+a {
+  color: #FE7331;
+  text-decoration: none;
+
+
+  transition: color .5s ease-in-out;
+  -moz-transition: color .5s ease-in-out;
+  -webkit-transition: color .5s ease-in-out;
+}
+
+a:hover {
+  color: #000000;
+  text-decoration: underline;
+}
+
+
+p {
+  margin-bottom: 20px;
+}
+
+
+.hide {
+  display:none;
+}
+
+
+strong {
+  font-weight: 700;
+}
+
+
+
+h1 {
+  font-family: 'Messapia';
+  font-weight: 300;
+  font-size: 110px;
+  line-height: 140px;
+  margin: 0px;
+}
+
+
+h2 {
+  font-family: 'Messapia';
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 55px;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-family: 'Messapia';
+  font-weight: 300;
+  font-size: 30px;
+  line-height: 42px;
+}
+
+
+
+footer {
+  padding-top: 100px;
+  padding-bottom: 100px;
+  text-align: center;
+  color: #FFFFFF;
+  background-color: #000000;
+}
+
+footer a,
+footer a:hover {
+  text-decoration: none;
+  color: #FFFFFF;
+}
+
+header {
+  width: 100%;
+  height: 110px;
+  padding-top: 60px;
+  display: block;
+  position: relative;
+  border-bottom: 1px solid #000000;
+}
+
+header .inner,
+section .sectionInner {
+  width: 1640px;
+  margin: 0 auto;
+  position: relative;
+}
+
+section.introduction .sectionInner,
+section.artworkPresentation .sectionInner,
+section.artistAndBeneficiary .sectionInner {
+  width: 1340px;
+  padding-top: 135px;
+  padding-bottom: 135px;
+}
+
+section.introduction {
+  border-bottom: 1px solid #000000;
+}
+
+section:last-child {
+  border-bottom: 0px;
+}
+
+
+
+
+.logo {
+  display: inline;
+}
+
+.logo a {
+  width: 280px;
+  height: 50px;
+  display: block;
+  background-image: url(../image/logo.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% auto;
+
+  font-size: 0px;
+  text-indent: -50000em;
+}
+
+.connectWalletButton {
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.connectWalletButton span,
+.buyButton span {
+  background: #fe7331;
+  width: 330px;
+  height: 50px;
+  display: block;
+  border-radius: 5px;
+
+  color: #FFFFFF;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 50px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.connectWalletButton span:hover,
+.buyButton span:hover {
+  cursor: pointer;
+  background-color: #222222;
+  transition: background-color 0.5s ease-in-out;
+}
+
+nav {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  text-align: right;
+
+}
+
+nav ul {
+  margin: 0px;
+  padding: 0px;
+  list-style: none outside none;
+}
+
+nav ul li {
+  font-size: 19px;
+  margin: 0px 0px 0px 130px;
+  padding: 0px;
+  list-style: none outside none;
+  display: inline-block;
+}
+
+nav ul li:first-child {
+  margin-left: 0px;
+}
+
+nav ul li a {
+  color: #000000;
+  text-transform: uppercase;
+  transition: color 0.5s ease-in-out;
+  height: 50px;
+  line-height: 50px;
+}
+
+nav ul li a:hover {
+  cursor: pointer;
+  color: #fe7331;
+  text-decoration: none;
+  transition: color 0.5s ease-in-out;
+}
+
+
+
+#wrapper {
+
+}
+
+/* Section .artworkPresentation */
+.artworkPresentation {
+
+}
+
+.artworkInfos,
+.artworkImage {
+  width: 50%;
+  float: left;
+}
+
+
+
+.artworkInfos .intro {
+  font-size: 25px;
+  font-weight: 100;
+  padding-right: 150px;
+  padding-bottom: 200px;
+}
+
+.artworkInfos .artworkDesc {
+  color: #7b7b7b;
+  padding-right: 100px;
+}
+
+.artworkImage {
+
+}
+
+.showMoreText {
+  display: none;
+}
+
+
+
+/* Section .artworkDetails */
+
+.artworkDetails {
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+}
+
+
+
+.priceField,
+.artistField,
+.ownerField,
+.patronageWrapper {
+  border-left: 1px solid #000000;
+  float: left;
+  text-align: center;
+  display: block;
+  height: 470px;
+}
+
+
+.priceField {
+  width: 419px;
+  position: relative;
+}
+
+.artistField {
+  width: 359px;
+}
+
+.ownerField {
+  width: 319px;
+}
+
+.patronageWrapper {
+  width: 538px;
+  border-right: 1px solid #000000;
+}
+
+.patronageWrapper .patronageField,
+.patronageWrapper .beneficiaryField {
+  border-bottom: 1px solid #000000;
+}
+
+
+.artworkDetails h3 {
+  padding-top: 55px;
+  padding-bottom: 25px;
+}
+
+.artworkDetails p {
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 32px;
+}
+
+.priceField p {
+  font-size: 35px;
+}
+
+.artistField p,
+.ownerField p {
+  text-transform: uppercase;
+}
+
+.artistField img,
+.ownerField img {
+  width: 100px;
+  height: 100px;
+}
+
+
+.buyButton span {
+  margin-top: 50px;
+  display: inline-block;
+  width: 270px;
+  height: 90px;
+  line-height: 90px;
+}
+
+
+.patronageWrapper .patronageField {
+  padding-bottom: 25px;
+}
+
+.patronageWrapper .patronageField h3 {
+  padding-bottom: 15px;
+}
+
+
+.patronageWrapper .beneficiaryField h3,
+.patronageWrapper .totalPatronageField h3 {
+  font-size: 20px;
+  line-height: 26px;
+  padding-top: 25px;
+  padding-bottom: 15px;
+}
+
+.changePrice,
+.adjustDate,
+#showMore,
+#showLess {
+  position: relative;
+  display: inline-block;
+  padding: 0px 20px;
+  background-color: #FFFFFF;
+  border: 1px solid #7b7b7b;
+  border-radius: 4px;
+  height: 27px;
+
+  line-height: 27px;
+  text-transform: uppercase;
+  color: #7b7b7b;
+  font-weight: 600;
+  font-size: 14px;
+
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+.changePrice:hover,
+.adjustDate:hover,
+#showMore:hover,
+#showLess:hover {
+  cursor: pointer;
+  background-color: #7b7b7b;
+  color: #FFFFFF;
+}
+
+.changePrice {
+  top: -7px;
+}
+
+.adjustDate {
+  top: -3px;
+}
+
+.overlayBox {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 200;
+  width: 100%;
+  height: 100%;
+  display: none;
+  background-color: rgba(141,141,141,0.85);
+}
+
+.overlayBox .innerBox {
+  width: 220px;
+  height: 120px;
+  padding: 15px;
+  display: block;
+  background: #FAFAFA;
+  border: 3px solid #FFFFFF;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -125px;
+  margin-top: -75px;
+}
+
+.innerBox .close {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border-left: 1px solid #8c8c8c;
+  border-bottom: 1px solid #8c8c8c;
+  color: #3e3e3e;
+  transition: color 0.5s ease-in-out;
+}
+
+.innerBox .close:hover {
+  cursor: pointer;
+  color: #fe7331;
+}
+
+.innerBox h3 {
+  font-size: 16px;
+}
+
+.innerBox input {
+  width: calc(100% - 42px);
+  padding: 0px 20px;
+  background-color: #FFFFFF;
+  border: 1px solid #7b7b7b;
+  border-radius: 4px;
+  height: 27px;
+
+  line-height: 27px;
+  color: #7b7b7b;
+  font-weight: 600;
+  font-size: 14px;
+  transition: border-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+.innerBox input:focus {
+  color: #000000;
+  border-color: #000000;
+}
+
+.innerBox input[type=submit] {
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0px;
+  background-color: #fe7331;
+  border-color: #fe7331;
+  color: #FFFFFF;
+  width: calc(100% - 2px);
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+
+.innerBox input[type=submit]:hover {
+  cursor: pointer;
+  color: #fe7331;
+  background-color: #FFFFFF;
+}
+
+
+/* Section .artistAndBeneficiary */
+
+
+.artistDesc,
+.beneficiaryDesc {
+  float: left;
+  width: 50%;
+  display: block;
+  position: relative;
+}
+
+
+.artistAndBeneficiary h2 {
+  margin-bottom: 50px;
+}
+
+.artistAndBeneficiary img {
+  width: 145px;
+  height: 145px;
+}
+
+.artistAndBeneficiary figure {
+  position: absolute;
+  left: -15px;
+  top: 80px;
+}
+
+.artistAndBeneficiary .text {
+  padding-left: 140px;
+  width: 400px;
+  color: #7b7b7b;
+}
+
+.artistAndBeneficiary .text a {
+  font-weight: 600;
+}
+
+.beneficiaryDesc .sdg {
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  text-align: center;
+  font-weight: 600;
+  display: inline-block;
+  color: #FFFFFF;
+  border-radius: 50%;
+}
+
+.beneficiaryDesc #sdg-7   { background-color: #f0c643; }
+.beneficiaryDesc #sdg-13  { background-color: #547d44; }
+.beneficiaryDesc #sdg-2   { background-color: #d3a83b; }
+.beneficiaryDesc #sdg-11  { background-color: #e7a239; }
+.beneficiaryDesc #sdg-15  { background-color: #79b843; }
+.beneficiaryDesc #sdg-8   { background-color: #912b45; }

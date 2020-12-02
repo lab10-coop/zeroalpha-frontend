@@ -1,0 +1,279 @@
+
+/* responsive styles */
+@media screen and (min-width: 1400px) and (max-width: 1700px) {
+
+  header {
+    height: 80px;
+    padding-top: 30px;
+  }
+
+  header .inner,
+  section .sectionInner {
+    width: 1340px;
+  }
+
+  section.introduction .sectionInner,
+  section.artworkPresentation .sectionInner,
+  section.artistAndBeneficiary .sectionInner {
+    width: 1000px;
+    padding-top: 135px;
+    padding-bottom: 135px;
+  }
+
+  nav ul li {
+    margin-left: 80px;
+  }
+
+
+  h1 {
+    font-size: 90px;
+    line-height: 120px;
+  }
+
+
+  .priceField {
+    width: 349px;
+  }
+
+  .artistField {
+    width: 309px;
+  }
+
+  .ownerField {
+    width: 279px;
+  }
+
+  .patronageWrapper {
+    width: 398px;
+    border-right: 1px solid #000000;
+  }
+
+  .artistAndBeneficiary .text {
+    width: 300px;
+  }
+
+}
+
+
+
+
+
+@media screen and (min-width: 1000px) and (max-width: 1399px) {
+
+  header {
+    height: 80px;
+    padding-top: 30px;
+  }
+
+  header .inner,
+  section .sectionInner {
+    width: 900px;
+  }
+
+  section.introduction .sectionInner,
+  section.artworkPresentation .sectionInner,
+  section.artistAndBeneficiary .sectionInner {
+    width: 900px;
+    padding-top: 90px;
+    padding-bottom: 90px;
+  }
+
+  .logo a {
+    width: 200px;
+    height: 50px;
+  }
+
+  nav ul li {
+    font-size: 17px;
+    margin-left: 30px;
+  }
+
+  .connectWalletButton span,
+  .buyButton span {
+    background: #fe7331;
+    width: 280px;
+  }
+
+
+  h1 {
+    font-size: 70px;
+    line-height: 90px;
+  }
+
+  h2 {
+    font-size: 34px;
+    line-height: 40px;
+  }
+
+  h3 {
+    font-size: 26px;
+    line-height: 30px;
+  }
+
+  .artworkInfos .intro {
+    padding-right: 50px;
+    padding-bottom: 100px;
+  }
+
+  .artworkImage figure {
+    text-align: right;
+  }
+
+  .artworkImage img {
+    width: 400px;
+    height: auto;
+  }
+
+
+  .priceField {
+    width: 339px;
+  }
+
+  .artistField {
+    width: 299px;
+  }
+
+  .ownerField {
+    width: 258px;
+    border-right: 1px solid #000000;
+  }
+
+  .patronageWrapper {
+    width: calc(100% - 2px);
+    border-top: 1px solid #000000;
+    border-right: 1px solid #000000;
+  }
+
+  .artistAndBeneficiary .text {
+    width: 300px;
+    padding-left: 100px;
+  }
+
+  .artistAndBeneficiary img {
+    height: 100px;
+    width: 100px;
+  }
+
+
+}
+
+@media screen and (min-width: 0px) and (max-width: 999px) {
+
+  header {
+    height: auto;
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+
+  header .inner,
+  section .sectionInner {
+    width: calc(100% - 20px);
+  }
+
+  section.introduction .sectionInner,
+  section.artworkPresentation .sectionInner,
+  section.artistAndBeneficiary .sectionInner {
+    width: calc(100% - 20px);
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .logo {
+    display: block;
+  }
+
+  .logo a {
+    width: 200px;
+    height: 50px;
+    margin: 0 auto;
+  }
+
+  .connectWalletButton {
+    position: relative;
+  }
+
+  nav {
+    position: relative;
+    right: auto;
+    width: 100%;
+    text-align: center;
+  }
+
+  .connectWalletButton span,
+  .buyButton span {
+    background: #fe7331;
+    width: 270px;
+  }
+
+
+  nav ul li {
+    font-size: 14px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  h1 {
+    font-size: 30px;
+    line-height: 40px;
+    text-align: center;
+  }
+
+  .artworkInfos,
+  .artworkImage,
+  .artistDesc,
+  .beneficiaryDesc {
+    width: 100%;
+    float: none;
+    padding-bottom: 30px;
+  }
+
+  .artworkInfos .intro {
+    padding-bottom: 50px;
+    padding-right: 30%;
+  }
+
+  .artworkInfos .artworkDesc {
+    padding: 0px;
+  }
+
+  .artworkImage img {
+    width: 100%;
+    height: auto;
+  }
+
+  .priceField,
+  .artistField,
+  .ownerField,
+  .patronageWrapper {
+    height: auto;
+    padding-bottom: 30px;
+    width: calc(100% - 2px);
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+  }
+
+  .patronageWrapper {
+    border-bottom: none;
+  }
+
+  .artistAndBeneficiary .text {
+    width: calc(100% - 100px);
+    padding-left: 100px;
+  }
+
+  .artistAndBeneficiary img {
+    height: 100px;
+    width: 100px;
+  }
+
+
+}
+
+/*
+@media screen and (min-width: 380px) and (max-width: 999px) {
+  body {
+    background-color: red;
+  }
+}
+*/
