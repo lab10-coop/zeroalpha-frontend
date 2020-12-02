@@ -267,6 +267,8 @@ section:last-child {
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
+  background: none;
+  border: none;
 }
 
 .connectWalletButton span,

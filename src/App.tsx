@@ -174,9 +174,15 @@ export default function App(): JSX.Element {
         <div className="inner">
           <div className="logo"><a href="https://zeroalpha.art/" title="ZeroAlpha">ZeroAlpha</a></div>
 
-          <div className="connectWalletButton">
-            <span id="connectWalletButton">Connect your Wallet</span>
-          </div>
+          <button className="connectWalletButton" type="button" onClick={() => connectWallet()}>
+            {(!onboardState) ? (
+              <span id="connectWalletButton">Connect your Wallet</span>
+            ) : (
+              <span id="connectWalletButton" title="Switch wallet">
+                {shortAddr(toChecksumAddress(onboardState.address))}
+              </span>
+            )}
+          </button>
 
           <nav>
             <ul>
