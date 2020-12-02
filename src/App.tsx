@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Onboard from 'bnc-onboard';
-import { Button, Input } from 'reactstrap';
-import { toChecksumAddress } from 'web3-utils';
+import { fromWei, toChecksumAddress, toWei } from 'web3-utils';
 import Web3 from 'web3';
 import { UserState } from 'bnc-onboard/dist/src/interfaces';
 import stewardContract from './contract-instances/steward';
@@ -12,6 +11,7 @@ import ownerImg from './image/owner.png';
 
 const networkId = parseInt(process.env.REACT_APP_CHAIN_N_ID || '', 10);
 const rpc = process.env.REACT_APP_CHAIN_RPC || '';
+const currencyUnit = process.env.REACT_APP_CURRENCY_UNI || 'xDai';
 
 export default function App(): JSX.Element {
   const onboard = Onboard({
@@ -39,6 +39,11 @@ export default function App(): JSX.Element {
   const [price, setPrice] = useState<string>('');
   const [collected, setCollected] = useState<string>('');
   const [newResellPrice, setNewResellPrice] = useState<number>(0);
+  const [newPrice, setNewPrice] = useState<string>();
+  const [buyDeposit, setBuyDeposit] = useState<string>();
+  const [changePriceShow, setChangePriceShow] = useState<boolean>(false);
+  const [adjustDateShow, setAdjustDateShow] = useState<boolean>(false);
+  const [buyShow, setBuyShow] = useState<boolean>(false);
 
   const shortAddr = (addr: string): string => `${addr.substr(0, 6)}…${addr.substr(-4)}`;
 
@@ -74,9 +79,13 @@ export default function App(): JSX.Element {
     setCollected(c);
   };
 
+  const init = async () => Promise.all([
+    fetchNftInfo(),
+    fetchStewardInfo(),
+  ]);
+
   useEffect(() => {
-    fetchNftInfo();
-    fetchStewardInfo();
+    init();
   }, []);
 
   const connectWallet = async () => {
@@ -100,50 +109,32 @@ export default function App(): JSX.Element {
     });
     alert('Price set.');
   };
+
+  const buy = async () => {
+    if (!onboardState) {
+      alert('No wallet connected.');
+      return;
+    }
+    if (!newPrice || !buyDeposit) {
+      alert('new price or deposit not set.');
+      return;
+    }
+    console.log('provider', onboard, onboard.getState(), onboard.getState().wallet.provider);
+    const web3 = new Web3(onboardState.wallet.provider);
+    await stewardContract(web3).methods.buy(toWei(newPrice), price).send({
+      // todo: make gasPrice configurable?
+      gasPrice: toWei('100', 'gwei'),
+      value: toWei(buyDeposit),
+      from: onboardState.address,
+    });
+    setNewPrice(undefined);
+    setBuyDeposit(undefined);
+    await init();
+    setBuyShow(false);
+  };
   /*
   return (
     <div className="container">
-
-      <header>
-        <h1>ZeroAlpha</h1>
-
-        <Button color="primary" onClick={() => connectWallet()}>
-          {(!onboardState) ? (
-            <span>Connect wallet</span>
-          ) : (
-            <span title="Switch wallet">
-              {shortAddr(toChecksumAddress(onboardState.address))}
-            </span>
-          )}
-        </Button>
-      </header>
-
-      <img src={imageUrl} alt={name} />
-
-      <p>
-        symbol:&nbsp;
-        {symbol}
-      </p>
-
-      <p>
-        artist:&nbsp;
-        {artist}
-      </p>
-
-      <p>
-        owner:&nbsp;
-        {owner}
-      </p>
-
-      <p>
-        sale price:&nbsp;
-        {price}
-      </p>
-
-      <p>
-        collected patronage:&nbsp;
-        {collected}
-      </p>
 
       <p>
         buy:
@@ -168,6 +159,15 @@ export default function App(): JSX.Element {
     </div>
   );
   */
+
+  // todo: make more text work
+  // todo: make scroll to work
+  // todo: make buttons overlays work
+  // todo: ens owner
+  // todo: use name from contract somewhere?
+  // todo: show symbol somewhere?
+  // todo: show beneficiary address somewhere?
+  // todo: close overlays!
   return (
     <div>
       <header>
@@ -262,7 +262,7 @@ export default function App(): JSX.Element {
 
             <div className="artworkImage">
               <figure>
-                <img src={imageUrl} alt="M-Carbon-Dioxide" />
+                <img src={imageUrl} alt={name} />
               </figure>
             </div>
 
@@ -279,20 +279,26 @@ export default function App(): JSX.Element {
               <div className="priceField">
                 <h3>Price:</h3>
                 <p>
-                  <span className="priceValue">1234</span>
+                  <span className="priceValue">{fromWei(price)}</span>
                   &nbsp;
-                  <span className="currency">xDai</span>
+                  <span className="currency">{currencyUnit}</span>
                   {' '}
-                  <span className="changePrice">change</span>
+                  {onboardState && onboardState.address.toLowerCase() === owner && (
+                    <button className="changePrice" type="button" onClick={() => setChangePriceShow(true)}>
+                      change
+                    </button>
+                  )}
                 </p>
                 <p className="buyButton">
-                  <span id="buyButton">Buy</span>
+                  <button id="buyButton" type="button" onClick={() => setBuyShow(true)}>
+                    Buy
+                  </button>
                 </p>
               </div>
 
               <div className="artistField">
                 <h3>Artist:</h3>
-                <p><span className="artistName">Sven Eberwein</span></p>
+                <p><span className="artistName" title={artist}>Sven Eberwein</span></p>
                 <figure>
                   <img src={artistImg} alt="Sven Eberwein" />
                 </figure>
@@ -300,9 +306,13 @@ export default function App(): JSX.Element {
 
               <div className="ownerField">
                 <h3>Owner:</h3>
-                <p><span className="ownerName">didi.eth</span></p>
+                <p>
+                  <span className="ownerName" title={owner}>
+                    {owner && shortAddr(toChecksumAddress(owner))}
+                  </span>
+                </p>
                 <figure>
-                  <img src={ownerImg} alt="didi.eth" />
+                  <img src={ownerImg} alt={owner} />
                 </figure>
               </div>
 
@@ -314,7 +324,11 @@ export default function App(): JSX.Element {
                     Till&nbsp;
                     <span className="patronageUntil">31.12.2021</span>
                     {' '}
-                    <span className="adjustDate">adjust</span>
+                    {onboardState && onboardState.address.toLowerCase() === owner && (
+                      <button className="adjustDate" type="button" onClick={() => setAdjustDateShow(true)}>
+                        adjust
+                      </button>
+                    )}
                   </p>
                 </div>
                 <div className="beneficiaryField">
@@ -324,9 +338,9 @@ export default function App(): JSX.Element {
                 <div className="totalPatronageField">
                   <h3>Total Patronage Collected:</h3>
                   <p>
-                    <span className="totalPatronageAmount">3.12313123</span>
+                    <span className="totalPatronageAmount">{fromWei(collected)}</span>
                     &nbsp;
-                    <span className="currency">xDai</span>
+                    <span className="currency">{currencyUnit}</span>
                   </p>
                 </div>
 
@@ -432,7 +446,7 @@ export default function App(): JSX.Element {
           </a>
         </footer>
 
-        <div className="overlayBox" id="changePriceField">
+        <div className={changePriceShow ? 'overlayBox show' : 'overlayBox'}>
           <div className="innerBox">
             <div className="close">X</div>
             <h3>Change Price</h3>
@@ -443,13 +457,44 @@ export default function App(): JSX.Element {
           </div>
         </div>
 
-        <div className="overlayBox" id="adjustDateField">
+        <div className={adjustDateShow ? 'overlayBox show' : 'overlayBox'}>
           <div className="innerBox">
             <div className="close">X</div>
             <h3>Adjust Date</h3>
             <form>
               <input type="text" name="XYZ" placeholder="123456" />
               <input type="submit" value="Set date" />
+            </form>
+          </div>
+        </div>
+
+        <div className={buyShow ? 'overlayBox show' : 'overlayBox'}>
+          <div className="innerBox">
+            <div className="close">X</div>
+            <h3>Buy</h3>
+            <form>
+              <input
+                type="text"
+                name="salePrice"
+                placeholder="new price"
+                value={newPrice}
+                onChange={(e) => setNewPrice(e.currentTarget.value)}
+              />
+              <input
+                type="text"
+                name="deposit"
+                placeholder="deposit"
+                value={buyDeposit}
+                onChange={(e) => setBuyDeposit(e.currentTarget.value)}
+              />
+              <input
+                type="submit"
+                value="Buy"
+                onClick={(e) => {
+                  e.preventDefault();
+                  buy();
+                }}
+              />
             </form>
           </div>
         </div>
