@@ -37,6 +37,10 @@ export default function App(): JSX.Element {
   const [artist, setArtist] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [collected, setCollected] = useState<string>('');
+  const [foreclosureTime, setForeclosureTime] = useState<string>('');
+  const [foreclosured, setForeclosed] = useState<boolean>(false);
+  const [newForeclosureTime, setNewForeclosureTime] = useState<string>('');
+  const [depositLeft, setDepositLeft] = useState<string>('');
   const [newResellPrice, setNewResellPrice] = useState<string>();
   const [newPrice, setNewPrice] = useState<string>();
   const [buyDeposit, setBuyDeposit] = useState<string>();
@@ -73,10 +77,16 @@ export default function App(): JSX.Element {
     const a = await stewardContract().methods.artist().call();
     const p = await stewardContract().methods.price().call();
     const c = await stewardContract().methods.totalCollected().call();
+    const fT = await stewardContract().methods.foreclosureTime().call();
+    const f = await stewardContract().methods.foreclosed().call();
+    const d = await stewardContract().methods.depositAbleToWithdraw().call();
 
     setArtist(a);
     setPrice(p);
     setCollected(c);
+    setForeclosureTime(fT);
+    setForeclosed(f);
+    setDepositLeft(d);
   };
 
   const init = async () => Promise.all([
@@ -140,6 +150,73 @@ export default function App(): JSX.Element {
     await init();
     setBuyShow(false);
   };
+
+  const withdrawOrDeposit = async () => {
+    if (addWithdraw === 0) {
+      return; // do nothing
+    }
+    if (!onboardState) {
+      // todo: connectWallet
+      alert('No wallet connected.');
+      return;
+    }
+    const web3 = new Web3(onboardState.wallet.provider);
+    if (addWithdraw >= parseFloat(fromWei(depositLeft))) {
+      // withdraw
+      await stewardContract(web3).methods.exit().send({
+        // todo: make gasPrice configurable?
+        gasPrice: toWei('100', 'gwei'),
+        from: onboardState.address,
+      });
+    } else if (addWithdraw > 0) {
+      // withdraw
+      await stewardContract(web3).methods.withdrawDeposit(toWei(Math.abs(addWithdraw).toString())).send({
+        // todo: make gasPrice configurable?
+        gasPrice: toWei('100', 'gwei'),
+        from: onboardState.address,
+      });
+    } else {
+      // deposit
+      await stewardContract(web3).methods.depositWei().send({
+        // todo: make gasPrice configurable?
+        gasPrice: toWei('100', 'gwei'),
+        value: toWei(Math.abs(addWithdraw).toString()),
+        from: onboardState.address,
+      });
+    }
+    setNewForeclosureTime('');
+    await init();
+    setAdjustDateShow(false);
+  };
+
+  const calcAddWithdraw = (): number => {
+    if (!foreclosureTime || !newForeclosureTime) {
+      return 0;
+    }
+    if (foreclosured) {
+      return 0;
+    }
+    const now = new Date();
+    const fDate = new Date(parseInt(foreclosureTime, 10) * 1000);
+    const newFDate = new Date(newForeclosureTime);
+    const secondsF = (fDate.getTime() - now.getTime()) / 1000;
+    const secondsNewF = (newFDate.getTime() - now.getTime()) / 1000;
+    if (Number.isNaN(secondsF) || Number.isNaN(secondsNewF)) {
+      return 0;
+    }
+    if (secondsNewF < 0) {
+      return parseFloat(fromWei(depositLeft));
+    }
+
+    // console.log('secondsF', secondsF);
+    // console.log('secondsNewF', secondsNewF);
+    // console.log('(secondsNewF / secondsF) - 1', (secondsNewF / secondsF) - 1);
+
+    return -((secondsNewF / secondsF) - 1) * parseFloat(fromWei(depositLeft));
+  };
+
+  let addWithdraw = 0;
+  addWithdraw = calcAddWithdraw();
 
   // todo: ens owner
   // todo: use name from contract somewhere?
@@ -303,7 +380,9 @@ export default function App(): JSX.Element {
                   <h3>Patronage:</h3>
                   <p>
                     Till&nbsp;
-                    <span className="patronageUntil">31.12.2021</span>
+                    <span className="patronageUntil">
+                      {new Date(parseInt(foreclosureTime, 10) * 1000).toLocaleDateString()}
+                    </span>
                     {' '}
                     {onboardState && onboardState.address.toLowerCase() === owner.toLowerCase() && (
                       <button className="adjustDate" type="button" onClick={() => setAdjustDateShow(true)}>
@@ -459,8 +538,10 @@ export default function App(): JSX.Element {
             <h3>Adjust Date</h3>
             <form>
               <div className="labelLike">
-                Patronage until:
-                <span>xx.xx.xxxx</span>
+                Patronage till:
+                <span>
+                  {new Date(parseInt(foreclosureTime, 10) * 1000).toLocaleDateString()}
+                </span>
               </div>
               <label htmlFor="patronage">
                 New Patronage:
@@ -468,17 +549,30 @@ export default function App(): JSX.Element {
                   type="text"
                   name="patronage"
                   placeholder="xx.xx.xxxx"
+                  value={newForeclosureTime}
+                  onChange={(e) => setNewForeclosureTime(e.currentTarget.value)}
                 />
               </label>
               <div className="labelLike">
-                Add / Withdraw:
+                {addWithdraw > 0 ? (
+                  <span>Withdraw:</span>
+                ) : (
+                  <span>Add:</span>
+                )}
                 <span>
-                  ..
+                  {Math.abs(addWithdraw).toFixed(6)}
                   {' '}
                   {currencyUnit}
                 </span>
               </div>
-              <input type="submit" value="Set date" />
+              <input
+                type="submit"
+                value="Confirm Change"
+                onClick={(e) => {
+                  e.preventDefault();
+                  withdrawOrDeposit();
+                }}
+              />
             </form>
           </div>
         </div>
@@ -498,7 +592,7 @@ export default function App(): JSX.Element {
                 />
               </label>
               <label htmlFor="deposit">
-                Patronage until:
+                Patronage till:
                 <input
                   type="text"
                   name="deposit"
