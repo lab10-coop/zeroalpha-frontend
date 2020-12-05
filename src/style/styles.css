@@ -255,9 +255,9 @@ section:last-child {
 
 .logo a {
   width: 280px;
-  height: 50px;
+  height: 59px;
   display: block;
-  background-image: url(../image/logo.png);
+  background-image: url(../image/logo.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% auto;
