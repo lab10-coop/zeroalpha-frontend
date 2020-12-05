@@ -132,7 +132,7 @@ export default function App(): JSX.Element {
     await stewardContract(web3).methods.buy(toWei(newPrice), price).send({
       // todo: make gasPrice configurable?
       gasPrice: toWei('100', 'gwei'),
-      value: toWei(buyDeposit),
+      value: toWei((parseFloat(fromWei(price)) + parseFloat(buyDeposit || '0')).toString()),
       from: onboardState.address,
     });
     setNewPrice(undefined);
@@ -467,23 +467,53 @@ export default function App(): JSX.Element {
             <button className="close" type="button" onClick={() => setBuyShow(false)}>X</button>
             <h3>Buy</h3>
             <form>
-              <input
-                type="text"
-                name="salePrice"
-                placeholder="new price"
-                value={newPrice}
-                onChange={(e) => setNewPrice(e.currentTarget.value)}
-              />
-              <input
-                type="text"
-                name="deposit"
-                placeholder="deposit"
-                value={buyDeposit}
-                onChange={(e) => setBuyDeposit(e.currentTarget.value)}
-              />
+              <label htmlFor="salePrice">
+                Re-sale price:
+                <input
+                  type="text"
+                  name="salePrice"
+                  placeholder="new price"
+                  value={newPrice}
+                  onChange={(e) => setNewPrice(e.currentTarget.value)}
+                />
+              </label>
+              <label htmlFor="deposit">
+                Patronage until:
+                <input
+                  type="text"
+                  name="deposit"
+                  placeholder="deposit"
+                  value={buyDeposit}
+                  onChange={(e) => setBuyDeposit(e.currentTarget.value)}
+                />
+              </label>
+              <div className="labelLike">
+                Deposit:
+                <span>
+                  {parseFloat(buyDeposit || '0')}
+                  {' '}
+                  {currencyUnit}
+                </span>
+              </div>
+              <div className="labelLike">
+                Purchase:
+                <span>
+                  {fromWei(price)}
+                  {' '}
+                  {currencyUnit}
+                </span>
+              </div>
+              <div className="labelLike total">
+                Purchase:
+                <span>
+                  {parseFloat(fromWei(price)) + parseFloat(buyDeposit || '0')}
+                  {' '}
+                  {currencyUnit}
+                </span>
+              </div>
               <input
                 type="submit"
-                value="Buy"
+                value="Confirm Purchase"
                 onClick={(e) => {
                   e.preventDefault();
                   buy();

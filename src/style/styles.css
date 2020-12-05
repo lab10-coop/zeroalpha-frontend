@@ -541,13 +541,14 @@ nav ul li a:hover {
 }
 
 .overlayBox .innerBox {
-  width: 220px;
-  height: 120px;
+  width: 300px;
+  height: 220px;
   padding: 15px;
   display: block;
   background: #FAFAFA;
-  border: 3px solid #FFFFFF;
+  border: 1px solid #000000;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+  border-radius: 0.5rem;
 
   position: absolute;
   top: 50%;
@@ -577,10 +578,20 @@ nav ul li a:hover {
 
 .innerBox h3 {
   font-size: 16px;
+  text-align: center;
+}
+
+.innerBox label, .innerBox .labelLike {
+  display: flex;
+  justify-content: space-between;
+}
+
+.innerBox label.total, .innerBox .labelLike.total {
+  font-weight: 700;
 }
 
 .innerBox input {
-  width: calc(100% - 42px);
+  width: 80px;
   padding: 0px 20px;
   background-color: #FFFFFF;
   border: 1px solid #7b7b7b;
