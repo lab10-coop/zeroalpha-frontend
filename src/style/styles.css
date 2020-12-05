@@ -584,6 +584,7 @@ nav ul li a:hover {
 .innerBox label, .innerBox .labelLike {
   display: flex;
   justify-content: space-between;
+  text-transform: uppercase;
 }
 
 .innerBox label.total, .innerBox .labelLike.total {

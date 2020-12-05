@@ -432,13 +432,15 @@ export default function App(): JSX.Element {
             <button className="close" type="button" onClick={() => setChangePriceShow(false)}>X</button>
             <h3>Change Price</h3>
             <form>
-              <input
-                type="text"
-                name="salePrice"
-                placeholder="new price"
-                value={newResellPrice}
-                onChange={(event) => setNewResellPrice(event.currentTarget.value)}
-              />
+              <label htmlFor="salePrice">
+                Re-sale price:
+                <input
+                  type="text"
+                  name="salePrice"
+                  value={newResellPrice}
+                  onChange={(event) => setNewResellPrice(event.currentTarget.value)}
+                />
+              </label>
               <input
                 type="submit"
                 onClick={(e) => {
@@ -472,7 +474,6 @@ export default function App(): JSX.Element {
                 <input
                   type="text"
                   name="salePrice"
-                  placeholder="new price"
                   value={newPrice}
                   onChange={(e) => setNewPrice(e.currentTarget.value)}
                 />
@@ -482,7 +483,6 @@ export default function App(): JSX.Element {
                 <input
                   type="text"
                   name="deposit"
-                  placeholder="deposit"
                   value={buyDeposit}
                   onChange={(e) => setBuyDeposit(e.currentTarget.value)}
                 />
