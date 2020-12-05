@@ -43,7 +43,7 @@ export default function App(): JSX.Element {
   const [depositLeft, setDepositLeft] = useState<string>('');
   const [newResellPrice, setNewResellPrice] = useState<string>();
   const [newPrice, setNewPrice] = useState<string>();
-  const [buyDeposit, setBuyDeposit] = useState<string>();
+  const [buyUntil, setBuyUntil] = useState<string>();
   const [changePriceShow, setChangePriceShow] = useState<boolean>(false);
   const [adjustDateShow, setAdjustDateShow] = useState<boolean>(false);
   const [buyShow, setBuyShow] = useState<boolean>(false);
@@ -142,11 +142,11 @@ export default function App(): JSX.Element {
     await stewardContract(web3).methods.buy(toWei(newPrice), price).send({
       // todo: make gasPrice configurable?
       gasPrice: toWei('100', 'gwei'),
-      value: toWei((parseFloat(fromWei(price)) + parseFloat(buyDeposit || '0')).toString()),
+      value: toWei((parseFloat(fromWei(price)) + buyDeposit).toString()),
       from: onboardState.address,
     });
     setNewPrice(undefined);
-    setBuyDeposit(undefined);
+    setBuyUntil(undefined);
     await init();
     setBuyShow(false);
   };
@@ -215,8 +215,25 @@ export default function App(): JSX.Element {
     return -((secondsNewF / secondsF) - 1) * parseFloat(fromWei(depositLeft));
   };
 
-  let addWithdraw = 0;
-  addWithdraw = calcAddWithdraw();
+  let addWithdraw = calcAddWithdraw();
+
+  const calcBuyDeposit = (): number => {
+    if (!buyUntil || !newPrice) {
+      return 0;
+    }
+    const now = new Date();
+    const buyUntilDate = new Date(buyUntil);
+    const buyUntilSeconds = (buyUntilDate.getTime() - now.getTime()) / 1000;
+    if (!buyUntilSeconds || buyUntilSeconds < 0) {
+      return 0;
+    }
+    // todo: this should come from the contract.
+    const patronage = 0.05;
+    const pps = (parseFloat(newPrice) * patronage) / 365 / 24 / 60 / 60;
+    return buyUntilSeconds * pps;
+  };
+
+  let buyDeposit = calcBuyDeposit();
 
   // todo: ens owner
   // todo: use name from contract somewhere?
@@ -596,14 +613,14 @@ export default function App(): JSX.Element {
                 <input
                   type="text"
                   name="deposit"
-                  value={buyDeposit}
-                  onChange={(e) => setBuyDeposit(e.currentTarget.value)}
+                  value={buyUntil}
+                  onChange={(e) => setBuyUntil(e.currentTarget.value)}
                 />
               </label>
               <div className="labelLike">
                 Deposit:
                 <span>
-                  {parseFloat(buyDeposit || '0')}
+                  {buyDeposit.toFixed(6)}
                   {' '}
                   {currencyUnit}
                 </span>
@@ -617,9 +634,9 @@ export default function App(): JSX.Element {
                 </span>
               </div>
               <div className="labelLike total">
-                Purchase:
+                Total:
                 <span>
-                  {parseFloat(fromWei(price)) + parseFloat(buyDeposit || '0')}
+                  {(parseFloat(fromWei(price)) + buyDeposit).toFixed(6)}
                   {' '}
                   {currencyUnit}
                 </span>
