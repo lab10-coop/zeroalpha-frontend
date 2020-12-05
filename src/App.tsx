@@ -458,7 +458,26 @@ export default function App(): JSX.Element {
             <button className="close" type="button" onClick={() => setAdjustDateShow(false)}>X</button>
             <h3>Adjust Date</h3>
             <form>
-              <input type="text" name="XYZ" placeholder="123456" />
+              <div className="labelLike">
+                Patronage until:
+                <span>xx.xx.xxxx</span>
+              </div>
+              <label htmlFor="patronage">
+                New Patronage:
+                <input
+                  type="text"
+                  name="patronage"
+                  placeholder="xx.xx.xxxx"
+                />
+              </label>
+              <div className="labelLike">
+                Add / Withdraw:
+                <span>
+                  ..
+                  {' '}
+                  {currencyUnit}
+                </span>
+              </div>
               <input type="submit" value="Set date" />
             </form>
           </div>
