@@ -592,13 +592,14 @@ nav ul li a:hover {
 }
 
 .innerBox input {
-  width: 70px;
-  padding: 0px 20px;
+  width: 110px;
+  padding: 0px 5px;
   background-color: #FFFFFF;
   border: 1px solid #7b7b7b;
   border-radius: 4px;
   height: 27px;
 
+  text-align: right;
   line-height: 27px;
   color: #7b7b7b;
   font-weight: 600;

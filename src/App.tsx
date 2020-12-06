@@ -563,9 +563,8 @@ export default function App(): JSX.Element {
               <label htmlFor="patronage">
                 New Patronage:
                 <input
-                  type="text"
+                  type="date"
                   name="patronage"
-                  placeholder="xx.xx.xxxx"
                   value={newForeclosureTime}
                   onChange={(e) => setNewForeclosureTime(e.currentTarget.value)}
                 />
@@ -611,7 +610,7 @@ export default function App(): JSX.Element {
               <label htmlFor="deposit">
                 Patronage till:
                 <input
-                  type="text"
+                  type="date"
                   name="deposit"
                   value={buyUntil}
                   onChange={(e) => setBuyUntil(e.currentTarget.value)}
