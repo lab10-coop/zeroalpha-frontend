@@ -55,14 +55,8 @@ export default function App(): JSX.Element {
     const tokenUri = await nftContract().methods.tokenURI(tokenId).call();
     console.log(tokenUri);
 
-    // todo: test this with a (cross-origin) working uri
-    // const resp = await fetch(tokenUri);
-    // console.log(resp);
-    const metaDataJson = {
-      name: 'This Artwork Is Always On Sale v2',
-      description: 'A Digital Artwork That Is Always On Sale',
-      image: 'https://thisartworkisalwaysonsale.com/static/media/TAIAOS_2.9eff2894.png',
-    };
+    const resp = await fetch(tokenUri);
+    const metaDataJson = await resp.json();
 
     const s = await nftContract().methods.symbol().call();
     const o = await nftContract().methods.ownerOf(tokenId).call();
