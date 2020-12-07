@@ -22,13 +22,31 @@ export class ArtSteward extends Contract {
   );
   clone(): ArtSteward;
   methods: {
+    BENEFICIARY(): TransactionObject<string>;
+
+    DENOMINATOR(): TransactionObject<string>;
+
+    INITIAL_PRICE(): TransactionObject<string>;
+
+    INITIAL_SALE_ARTIST_SHARE_NUMERATOR(): TransactionObject<string>;
+
+    INITIAL_SALE_PLATFORM_SHARE_NUMERATOR(): TransactionObject<string>;
+
+    PLATFORM(): TransactionObject<string>;
+
+    RESALE_ARTIST_SHARE_NUMERATOR(): TransactionObject<string>;
+
+    RESALE_OWNER_SHARE_NUMERATOR(): TransactionObject<string>;
+
+    RESALE_PLATFORM_SHARE_NUMERATOR(): TransactionObject<string>;
+
     _collectPatronage(): TransactionObject<void>;
 
     art(): TransactionObject<string>;
 
     artist(): TransactionObject<string>;
 
-    artistFund(): TransactionObject<string>;
+    beneficiaryFund(): TransactionObject<string>;
 
     buy(
       _newPrice: number | string,
@@ -50,6 +68,8 @@ export class ArtSteward extends Contract {
     foreclosed(): TransactionObject<boolean>;
 
     foreclosureTime(): TransactionObject<string>;
+
+    patronageNumerator(): TransactionObject<string>;
 
     patronageOwed(): TransactionObject<string>;
 
@@ -76,7 +96,7 @@ export class ArtSteward extends Contract {
 
     totalCollected(): TransactionObject<string>;
 
-    withdrawArtistFunds(): TransactionObject<void>;
+    withdrawBeneficiaryFunds(): TransactionObject<void>;
 
     withdrawDeposit(_wei: number | string): TransactionObject<void>;
 

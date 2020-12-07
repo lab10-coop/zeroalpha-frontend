@@ -38,7 +38,7 @@ export default function App(): JSX.Element {
   const [price, setPrice] = useState<string>('');
   const [collected, setCollected] = useState<string>('');
   const [foreclosureTime, setForeclosureTime] = useState<string>('');
-  const [foreclosured, setForeclosed] = useState<boolean>(false);
+  const [foreclosed, setForeclosed] = useState<boolean>(false);
   const [newForeclosureTime, setNewForeclosureTime] = useState<string>('');
   const [depositLeft, setDepositLeft] = useState<string>('');
   const [newResellPrice, setNewResellPrice] = useState<string>();
@@ -70,13 +70,15 @@ export default function App(): JSX.Element {
   const fetchStewardInfo = async () => {
     const a = await stewardContract().methods.artist().call();
     const p = await stewardContract().methods.price().call();
+    const iP = await stewardContract().methods.INITIAL_PRICE().call();
     const c = await stewardContract().methods.totalCollected().call();
     const fT = await stewardContract().methods.foreclosureTime().call();
     const f = await stewardContract().methods.foreclosed().call();
     const d = await stewardContract().methods.depositAbleToWithdraw().call();
 
     setArtist(a);
-    setPrice(p);
+    // if foreclosed true price should be initialPrice.
+    setPrice(f ? iP : p);
     setCollected(c);
     setForeclosureTime(fT);
     setForeclosed(f);
@@ -187,7 +189,7 @@ export default function App(): JSX.Element {
     if (!foreclosureTime || !newForeclosureTime) {
       return 0;
     }
-    if (foreclosured) {
+    if (foreclosed) {
       return 0;
     }
     const now = new Date();
@@ -373,17 +375,27 @@ export default function App(): JSX.Element {
                 </figure>
               </div>
 
-              <div className="ownerField">
-                <h3>Owner:</h3>
-                <p>
-                  <span className="ownerName" title={owner}>
-                    {owner && shortAddr(toChecksumAddress(owner))}
-                  </span>
-                </p>
-                <figure>
-                  <img src={ownerImg} alt={owner} />
-                </figure>
-              </div>
+              {foreclosed ? (
+                <div className="ownerField">
+                  <h3>Owner:</h3>
+                  <p><span className="artistName" title={artist}>Sven Eberwein</span></p>
+                  <figure>
+                    <img src={artistImg} alt="Sven Eberwein" />
+                  </figure>
+                </div>
+              ) : (
+                <div className="ownerField">
+                  <h3>Owner:</h3>
+                  <p>
+                    <span className="ownerName" title={owner}>
+                      {owner && shortAddr(toChecksumAddress(owner))}
+                    </span>
+                  </p>
+                  <figure>
+                    <img src={ownerImg} alt={owner} />
+                  </figure>
+                </div>
+              )}
 
               <div className="patronageWrapper">
 
