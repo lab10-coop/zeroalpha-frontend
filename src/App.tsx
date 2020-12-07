@@ -37,7 +37,7 @@ export default function App(): JSX.Element {
   const [artist, setArtist] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [initialPrice, setInitialPrice] = useState<string>('');
-  const [collected, setCollected] = useState<string>('');
+  const [collected, setCollected] = useState<number>(0);
   const [foreclosureTime, setForeclosureTime] = useState<string>('');
   const [foreclosed, setForeclosed] = useState<boolean>(false);
   const [newForeclosureTime, setNewForeclosureTime] = useState<string>('');
@@ -74,7 +74,6 @@ export default function App(): JSX.Element {
     const a = await stewardContract().methods.artist().call();
     const p = await stewardContract().methods.price().call();
     const iP = await stewardContract().methods.initialPrice().call();
-    const c = await stewardContract().methods.totalCollected().call();
     const fT = await stewardContract().methods.foreclosureTime().call();
     const f = await stewardContract().methods.foreclosed().call();
     const d = await stewardContract().methods.depositAbleToWithdraw().call();
@@ -83,10 +82,16 @@ export default function App(): JSX.Element {
     // if foreclosed true price should be initialPrice.
     setPrice(f ? iP : p);
     setInitialPrice(iP);
-    setCollected(c);
     setForeclosureTime(fT);
     setForeclosed(f);
     setDepositLeft(d);
+
+    const web3 = new Web3(process.env.REACT_APP_CHAIN_RPC_WS || '');
+    web3.eth.subscribe('newBlockHeaders', async () => {
+      const c = await stewardContract(web3).methods.totalCollected().call();
+      const o = await stewardContract(web3).methods.patronageOwed().call();
+      setCollected(parseFloat(fromWei(c)) + parseFloat(fromWei(o)));
+    });
   };
 
   const init = async () => Promise.all([
@@ -451,7 +456,7 @@ export default function App(): JSX.Element {
                 <div className="totalPatronageField">
                   <h3>Total Patronage Collected:</h3>
                   <p>
-                    <span className="totalPatronageAmount">{fromWei(collected)}</span>
+                    <span className="totalPatronageAmount">{collected.toFixed(10)}</span>
                     &nbsp;
                     <span className="currency">{currencyUnit}</span>
                   </p>
