@@ -36,6 +36,7 @@ export default function App(): JSX.Element {
   const [owner, setOwner] = useState<string>('');
   const [artist, setArtist] = useState<string>('');
   const [price, setPrice] = useState<string>('');
+  const [initialPrice, setInitialPrice] = useState<string>('');
   const [collected, setCollected] = useState<string>('');
   const [foreclosureTime, setForeclosureTime] = useState<string>('');
   const [foreclosed, setForeclosed] = useState<boolean>(false);
@@ -81,6 +82,7 @@ export default function App(): JSX.Element {
     setArtist(a);
     // if foreclosed true price should be initialPrice.
     setPrice(f ? iP : p);
+    setInitialPrice(iP);
     setCollected(c);
     setForeclosureTime(fT);
     setForeclosed(f);
@@ -588,8 +590,14 @@ export default function App(): JSX.Element {
             <button className="close" type="button" onClick={() => setChangeInitialPriceShow(false)}>X</button>
             <h3>Change Initial Price</h3>
             <form>
-              <label htmlFor="salePrice">
+              <div className="labelLike">
                 Initial price:
+                <span>
+                  {fromWei(initialPrice)}
+                </span>
+              </div>
+              <label htmlFor="salePrice">
+                New price:
                 <input
                   type="text"
                   name="salePrice"
