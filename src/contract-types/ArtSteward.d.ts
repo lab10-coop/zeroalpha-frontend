@@ -26,8 +26,6 @@ export class ArtSteward extends Contract {
 
     DENOMINATOR(): TransactionObject<string>;
 
-    INITIAL_PRICE(): TransactionObject<string>;
-
     INITIAL_SALE_ARTIST_SHARE_NUMERATOR(): TransactionObject<string>;
 
     INITIAL_SALE_PLATFORM_SHARE_NUMERATOR(): TransactionObject<string>;
@@ -53,6 +51,10 @@ export class ArtSteward extends Contract {
       _currentPrice: number | string
     ): TransactionObject<void>;
 
+    changeInitialPrice(
+      _newInitialPrice: number | string
+    ): TransactionObject<void>;
+
     changePrice(_newPrice: number | string): TransactionObject<void>;
 
     currentCollected(): TransactionObject<string>;
@@ -68,6 +70,8 @@ export class ArtSteward extends Contract {
     foreclosed(): TransactionObject<boolean>;
 
     foreclosureTime(): TransactionObject<string>;
+
+    initialPrice(): TransactionObject<string>;
 
     patronageNumerator(): TransactionObject<string>;
 
@@ -111,6 +115,7 @@ export class ArtSteward extends Contract {
     }>;
     LogCollection: ContractEvent<string>;
     LogForeclosure: ContractEvent<string>;
+    LogInitialPriceChange: ContractEvent<string>;
     LogPriceChange: ContractEvent<string>;
     allEvents: (
       options?: EventOptions,

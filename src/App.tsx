@@ -42,9 +42,11 @@ export default function App(): JSX.Element {
   const [newForeclosureTime, setNewForeclosureTime] = useState<string>('');
   const [depositLeft, setDepositLeft] = useState<string>('');
   const [newResellPrice, setNewResellPrice] = useState<string>();
+  const [newInitialPrice, setNewInitialPrice] = useState<string>();
   const [newPrice, setNewPrice] = useState<string>();
   const [buyUntil, setBuyUntil] = useState<string>();
   const [changePriceShow, setChangePriceShow] = useState<boolean>(false);
+  const [changeInitialPriceShow, setChangeInitialPriceShow] = useState<boolean>(false);
   const [adjustDateShow, setAdjustDateShow] = useState<boolean>(false);
   const [buyShow, setBuyShow] = useState<boolean>(false);
   const [showMore, setShowMore] = useState<boolean>(false);
@@ -70,7 +72,7 @@ export default function App(): JSX.Element {
   const fetchStewardInfo = async () => {
     const a = await stewardContract().methods.artist().call();
     const p = await stewardContract().methods.price().call();
-    const iP = await stewardContract().methods.INITIAL_PRICE().call();
+    const iP = await stewardContract().methods.initialPrice().call();
     const c = await stewardContract().methods.totalCollected().call();
     const fT = await stewardContract().methods.foreclosureTime().call();
     const f = await stewardContract().methods.foreclosed().call();
@@ -122,6 +124,27 @@ export default function App(): JSX.Element {
     setNewResellPrice(undefined);
     await init();
     setChangePriceShow(false);
+  };
+
+  const saveNewInitialPrice = async () => {
+    if (!onboardState) {
+      // todo: connectWallet
+      alert('No wallet connected.');
+      return;
+    }
+    if (!newInitialPrice) {
+      alert('new price not set.');
+      return;
+    }
+    const web3 = new Web3(onboardState.wallet.provider);
+    await stewardContract(web3).methods.changeInitialPrice(toWei(newInitialPrice)).send({
+      // todo: make gasPrice configurable?
+      gasPrice: toWei('100', 'gwei'),
+      from: onboardState.address,
+    });
+    setNewInitialPrice(undefined);
+    await init();
+    setChangeInitialPriceShow(false);
   };
 
   const buy = async () => {
@@ -359,6 +382,11 @@ export default function App(): JSX.Element {
                       change
                     </button>
                   )}
+                  {onboardState && onboardState.address.toLowerCase() === artist.toLowerCase() && (
+                    <button className="changePrice" type="button" onClick={() => setChangeInitialPriceShow(true)}>
+                      change initial
+                    </button>
+                  )}
                 </p>
                 <p className="buyButton">
                   <button id="buyButton" type="button" onClick={() => setBuyShow(true)}>
@@ -548,6 +576,32 @@ export default function App(): JSX.Element {
                 onClick={(e) => {
                   e.preventDefault();
                   saveNewResellPrice();
+                }}
+                value="Set price"
+              />
+            </form>
+          </div>
+        </div>
+
+        <div className={changeInitialPriceShow ? 'overlayBox show' : 'overlayBox'}>
+          <div className="innerBox">
+            <button className="close" type="button" onClick={() => setChangeInitialPriceShow(false)}>X</button>
+            <h3>Change Initial Price</h3>
+            <form>
+              <label htmlFor="salePrice">
+                Initial price:
+                <input
+                  type="text"
+                  name="salePrice"
+                  value={newInitialPrice}
+                  onChange={(event) => setNewInitialPrice(event.currentTarget.value)}
+                />
+              </label>
+              <input
+                type="submit"
+                onClick={(e) => {
+                  e.preventDefault();
+                  saveNewInitialPrice();
                 }}
                 value="Set price"
               />

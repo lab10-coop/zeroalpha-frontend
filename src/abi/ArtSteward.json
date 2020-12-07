@@ -69,6 +69,19 @@
     },
     {
       "type": "event",
+      "name": "LogInitialPriceChange",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "newInitialPrice",
+          "internalType": "uint256",
+          "indexed": true
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
       "name": "LogPriceChange",
       "inputs": [
         {
@@ -108,19 +121,6 @@
         }
       ],
       "name": "DENOMINATOR",
-      "inputs": []
-    },
-    {
-      "type": "function",
-      "stateMutability": "view",
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "",
-          "internalType": "uint256"
-        }
-      ],
-      "name": "INITIAL_PRICE",
       "inputs": []
     },
     {
@@ -269,6 +269,19 @@
       "type": "function",
       "stateMutability": "nonpayable",
       "outputs": [],
+      "name": "changeInitialPrice",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "_newInitialPrice",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "outputs": [],
       "name": "changePrice",
       "inputs": [
         {
@@ -355,6 +368,19 @@
         }
       ],
       "name": "foreclosureTime",
+      "inputs": []
+    },
+    {
+      "type": "function",
+      "stateMutability": "view",
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "",
+          "internalType": "uint256"
+        }
+      ],
+      "name": "initialPrice",
       "inputs": []
     },
     {
