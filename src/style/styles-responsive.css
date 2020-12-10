@@ -268,6 +268,17 @@
   }
 
 
+  .overlayBox .innerBox {
+    width: 300px;
+    left: calc(50% - 150px);
+  }
+
+  .innerBox input {
+    width: 110px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
 }
 
 /*
