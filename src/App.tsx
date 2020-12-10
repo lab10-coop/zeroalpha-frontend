@@ -435,7 +435,7 @@ export default function App(): JSX.Element {
               <div className="patronageWrapper">
 
                 <div className="patronageField">
-                  <h3>Patronage:</h3>
+                  <h3>Patronage (5% p.a.):</h3>
                   <p>
                     Till&nbsp;
                     <span className="patronageUntil">
@@ -593,7 +593,7 @@ export default function App(): JSX.Element {
         <div className={changeInitialPriceShow ? 'overlayBox show' : 'overlayBox'}>
           <div className="innerBox">
             <button className="close" type="button" onClick={() => setChangeInitialPriceShow(false)}>X</button>
-            <h3>Change Initial Price</h3>
+            <h3>Change</h3>
             <form>
               <div className="labelLike">
                 Initial price:
@@ -625,16 +625,16 @@ export default function App(): JSX.Element {
         <div className={adjustDateShow ? 'overlayBox show' : 'overlayBox'}>
           <div className="innerBox">
             <button className="close" type="button" onClick={() => setAdjustDateShow(false)}>X</button>
-            <h3>Adjust Date</h3>
+            <h3>Adjust</h3>
             <form>
               <div className="labelLike">
-                Patronage till:
+                Your patronage till:
                 <span>
                   {new Date(parseInt(foreclosureTime, 10) * 1000).toLocaleDateString()}
                 </span>
               </div>
               <label htmlFor="patronage">
-                New Patronage:
+                Extend patronage till:
                 <input
                   type="date"
                   name="patronage"
