@@ -238,7 +238,6 @@
   .ownerField,
   .patronageWrapper {
     height: auto;
-    padding-bottom: 30px;
     width: calc(100% - 2px);
     border-left: 1px solid #000000;
     border-right: 1px solid #000000;
