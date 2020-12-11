@@ -79,7 +79,7 @@ export default function App(): JSX.Element {
   const fetchNftInfo = async () => {
     let tokenUri = await nftContract().methods.tokenURI(tokenId).call();
 
-    tokenUri = tokenUri.replace('https://ipfs.io/ipfs/', 'https://cloudflare-ipfs.com/ipfs/');
+    // tokenUri = tokenUri.replace('https://ipfs.io/ipfs/', 'https://cloudflare-ipfs.com/ipfs/');
     console.log(tokenUri);
 
     const resp = await fetch(tokenUri);
