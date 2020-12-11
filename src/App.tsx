@@ -3,6 +3,7 @@ import Onboard from 'bnc-onboard';
 import { fromWei, toChecksumAddress, toWei } from 'web3-utils';
 import Web3 from 'web3';
 import { UserState } from 'bnc-onboard/dist/src/interfaces';
+import namehash from 'eth-ens-namehash';
 import stewardContract from './contract-instances/steward';
 import nftContract, { id as tokenId } from './contract-instances/nft';
 import artistImg from './image/artist-sven-eberwein.png';
@@ -30,10 +31,12 @@ const onboard = Onboard({
 
 export default function App(): JSX.Element {
   const [onboardState, setOnboardState] = useState<UserState>();
+  const [ensName, setEnsName] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [symbol, setSymbol] = useState<string>('');
   const [imageUrl, setImageUrl] = useState<string>('');
   const [owner, setOwner] = useState<string>('');
+  const [ownerEns, setOwnerEns] = useState<string>('');
   const [artist, setArtist] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [initialPrice, setInitialPrice] = useState<string>('');
@@ -54,6 +57,21 @@ export default function App(): JSX.Element {
 
   const shortAddr = (addr: string): string => `${addr.substr(0, 6)}…${addr.substr(-4)}`;
 
+  // see: https://github.com/ethereum/web3.js/issues/2683#issuecomment-547348416
+  const revEns = async (address: string): Promise<string> => {
+    const web3 = new Web3(process.env.REACT_APP_ETH_RPC || '');
+    const lookup = `${address.toLowerCase().substr(2)}.addr.reverse`;
+    const ResolverContract = await web3.eth.ens.getResolver(lookup);
+    const nh = namehash.hash(lookup);
+    let ensN;
+    try {
+      ensN = await ResolverContract.methods.name(nh).call();
+    } catch (error) {
+      return '';
+    }
+    return ensN;
+  };
+
   const fetchNftInfo = async () => {
     const tokenUri = await nftContract().methods.tokenURI(tokenId).call();
     console.log(tokenUri);
@@ -64,10 +82,13 @@ export default function App(): JSX.Element {
     const s = await nftContract().methods.symbol().call();
     const o = await nftContract().methods.ownerOf(tokenId).call();
 
+    const ensN = await revEns(o);
+
     setName(metaDataJson.name);
     setSymbol(s);
     setImageUrl(metaDataJson.image);
     setOwner(o);
+    setOwnerEns(ensN);
   };
 
   const fetchStewardInfo = async () => {
@@ -109,7 +130,9 @@ export default function App(): JSX.Element {
       return;
     }
     await onboard.walletCheck();
+    const ensN = await revEns(onboard.getState().address);
     setOnboardState(onboard.getState());
+    setEnsName(ensN);
   };
 
   const saveNewResellPrice = async () => {
@@ -261,7 +284,6 @@ export default function App(): JSX.Element {
 
   let buyDeposit = calcBuyDeposit();
 
-  // todo: ens owner
   // todo: use name from contract somewhere?
   // todo: show symbol somewhere?
   // todo: show beneficiary address somewhere?
@@ -276,7 +298,7 @@ export default function App(): JSX.Element {
               <span id="connectWalletButton">Connect your Wallet</span>
             ) : (
               <span id="connectWalletButton" title="Switch wallet">
-                {shortAddr(toChecksumAddress(onboardState.address))}
+                {ensName || shortAddr(toChecksumAddress(onboardState.address))}
               </span>
             )}
           </button>
@@ -423,11 +445,11 @@ export default function App(): JSX.Element {
                   <h3>Owner:</h3>
                   <p>
                     <span className="ownerName" title={owner}>
-                      {owner && shortAddr(toChecksumAddress(owner))}
+                      {ownerEns || (owner && shortAddr(toChecksumAddress(owner)))}
                     </span>
                   </p>
                   <figure>
-                    <img src={ownerImg} alt={owner} />
+                    <img src={ownerImg} alt={ownerEns || owner} />
                   </figure>
                 </div>
               )}
