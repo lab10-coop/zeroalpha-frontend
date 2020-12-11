@@ -304,7 +304,7 @@ export default function App(): JSX.Element {
   // todo: show beneficiary address somewhere?
   return (
     <div>
-      <header>
+      <header className="zaHeader">
         <div className="inner">
           <div className="logo"><a href="https://zeroalpha.art/" title="ZeroAlpha">ZeroAlpha</a></div>
 
@@ -339,34 +339,13 @@ export default function App(): JSX.Element {
       </header>
       <div id="wrapper">
 
-        <section className="introduction">
-          <div className="sectionInner">
-            <h1>
-              Hold your bag
-              <br />
-              for a better world
-            </h1>
-          </div>
-        </section>
-
         <section className="artworkPresentation">
           <div className="sectionInner">
 
             <div className="artworkInfos">
-              <div className="intro">
-                <p>
-                  <strong>THIS OUTSTANDING ARTWORK</strong>
-                  <br />
-                  is always-on-sale by the current owner and
-                  the patronage will go to non-profit
-                  organizations that work on big global
-                  challenges.
-                </p>
-              </div>
-
               <h2>M Carbon Dioxide</h2>
               <div className="artworkDesc">
-                <p><strong>UNIQUENESS: 1 OF 1</strong></p>
+                <p><strong>Edition 1 of 1</strong></p>
                 <p>
                   This one of his latest works of art and represents 1000 tonnes
                   of CO2 formerly purchased and retired as verified credit units
@@ -396,6 +375,16 @@ export default function App(): JSX.Element {
                 </p>
               </div>
 
+              <div className="intro">
+                <p>
+                  <strong>THIS OUTSTANDING ARTWORK</strong>
+                  <br />
+                  is always-on-sale by the current owner and
+                  the patronage will go to non-profit
+                  organizations that work on big global
+                  challenges.
+                </p>
+              </div>
             </div>
 
             <div className="artworkImage">
@@ -415,7 +404,7 @@ export default function App(): JSX.Element {
             <div className="artworkDetailsWrapper">
 
               <div className="priceField">
-                <h3>Price:</h3>
+                <h3>Price</h3>
                 <p>
                   <span className="priceValue">{fromWei(price)}</span>
                   &nbsp;
@@ -467,7 +456,7 @@ export default function App(): JSX.Element {
               </div>
 
               <div className="artistField">
-                <h3>Artist:</h3>
+                <h3>Artist</h3>
                 <p><span className="artistName" title={artist}>Sven Eberwein</span></p>
                 <figure>
                   <img src={artistImg} alt="Sven Eberwein" />
@@ -476,7 +465,7 @@ export default function App(): JSX.Element {
 
               {foreclosed ? (
                 <div className="ownerField">
-                  <h3>Owner:</h3>
+                  <h3>Owner</h3>
                   <p><span className="artistName" title={artist}>Sven Eberwein</span></p>
                   <figure>
                     <img src={artistImg} alt="Sven Eberwein" />
@@ -484,7 +473,7 @@ export default function App(): JSX.Element {
                 </div>
               ) : (
                 <div className="ownerField">
-                  <h3>Owner:</h3>
+                  <h3>Owner</h3>
                   <p>
                     <span className="ownerName" title={owner}>
                       {ownerEns || (owner && shortAddr(toChecksumAddress(owner)))}
@@ -499,7 +488,7 @@ export default function App(): JSX.Element {
               <div className="patronageWrapper">
 
                 <div className="patronageField">
-                  <h3>Patronage (5% p.a.):</h3>
+                  <h3>Patronage</h3>
                   <p>
                     Till&nbsp;
                     <span className="patronageUntil">
@@ -523,11 +512,11 @@ export default function App(): JSX.Element {
                   </p>
                 </div>
                 <div className="beneficiaryField">
-                  <h3>Beneficiary:</h3>
+                  <h3>Beneficiary</h3>
                   <p><span className="beneficiaryName">lab10 collective</span></p>
                 </div>
                 <div className="totalPatronageField">
-                  <h3>Total Patronage Collected:</h3>
+                  <h3>Total Patronage Collected</h3>
                   <p>
                     <span className="totalPatronageAmount">{collected.toFixed(10)}</span>
                     &nbsp;
@@ -554,12 +543,12 @@ export default function App(): JSX.Element {
               <div className="text">
                 <p>
                   <a
-                    href="https://twitter.com/Seven_Eberwein"
-                    title="@Seven_Eberwein on Twitter"
+                    href="https://twitter.com/Sven_Eberwein"
+                    title="@Sven_Eberwein on Twitter"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    @Seven_Eberwein
+                    @Sven_Eberwein
                   </a>
                 </p>
                 <p>
