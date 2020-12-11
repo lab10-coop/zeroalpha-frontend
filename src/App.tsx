@@ -111,9 +111,14 @@ export default function App(): JSX.Element {
 
     const web3 = new Web3(process.env.REACT_APP_CHAIN_RPC_WS || '');
     web3.eth.subscribe('newBlockHeaders', async () => {
+      const forec = await stewardContract().methods.foreclosed().call();
       const c = await stewardContract(web3).methods.totalCollected().call();
       const o = await stewardContract(web3).methods.patronageOwed().call();
-      setCollected(parseFloat(fromWei(c)) + parseFloat(fromWei(o)));
+      if (forec) {
+        setCollected(parseFloat(fromWei(c)));
+      } else {
+        setCollected(parseFloat(fromWei(c)) + parseFloat(fromWei(o)));
+      }
     });
   };
 
