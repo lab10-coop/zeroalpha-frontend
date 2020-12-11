@@ -54,6 +54,10 @@ export default function App(): JSX.Element {
   const [adjustDateShow, setAdjustDateShow] = useState<boolean>(false);
   const [buyShow, setBuyShow] = useState<boolean>(false);
   const [showMore, setShowMore] = useState<boolean>(false);
+  const [buyLoading, setBuyLoading] = useState<boolean>(false);
+  const [priceLoading, setPriceLoading] = useState<boolean>(false);
+  const [priceILoading, setPriceILoading] = useState<boolean>(false);
+  const [adjustLoading, setAdjustLoading] = useState<boolean>(false);
 
   const shortAddr = (addr: string): string => `${addr.substr(0, 6)}…${addr.substr(-4)}`;
 
@@ -151,6 +155,7 @@ export default function App(): JSX.Element {
       alert('new price not set.');
       return;
     }
+    setPriceLoading(true);
     const web3 = new Web3(onboardState.wallet.provider);
     await stewardContract(web3).methods.changePrice(toWei(newResellPrice)).send({
       // todo: make gasPrice configurable?
@@ -160,6 +165,7 @@ export default function App(): JSX.Element {
     setNewResellPrice(undefined);
     await init();
     setChangePriceShow(false);
+    setPriceLoading(false);
   };
 
   const saveNewInitialPrice = async () => {
@@ -171,6 +177,7 @@ export default function App(): JSX.Element {
       alert('new price not set.');
       return;
     }
+    setPriceILoading(true);
     const web3 = new Web3(onboardState.wallet.provider);
     await stewardContract(web3).methods.changeInitialPrice(toWei(newInitialPrice)).send({
       // todo: make gasPrice configurable?
@@ -180,6 +187,7 @@ export default function App(): JSX.Element {
     setNewInitialPrice(undefined);
     await init();
     setChangeInitialPriceShow(false);
+    setPriceILoading(false);
   };
 
   const buy = async () => {
@@ -191,6 +199,7 @@ export default function App(): JSX.Element {
       alert('new price or deposit not set.');
       return;
     }
+    setBuyLoading(true);
     const web3 = new Web3(onboardState.wallet.provider);
     await stewardContract(web3).methods.buy(toWei(newPrice), price).send({
       // todo: make gasPrice configurable?
@@ -202,6 +211,7 @@ export default function App(): JSX.Element {
     setBuyUntil(undefined);
     await init();
     setBuyShow(false);
+    setBuyLoading(false);
   };
 
   const withdrawOrDeposit = async () => {
@@ -212,6 +222,7 @@ export default function App(): JSX.Element {
       alert('No wallet connected.');
       return;
     }
+    setAdjustLoading(true);
     const web3 = new Web3(onboardState.wallet.provider);
     if (addWithdraw >= parseFloat(fromWei(depositLeft))) {
       // withdraw
@@ -239,6 +250,7 @@ export default function App(): JSX.Element {
     setNewForeclosureTime('');
     await init();
     setAdjustDateShow(false);
+    setAdjustLoading(false);
   };
 
   const calcAddWithdraw = (): number => {
@@ -639,14 +651,25 @@ export default function App(): JSX.Element {
                   onChange={(event) => setNewResellPrice(event.currentTarget.value)}
                 />
               </label>
-              <input
+              <button
+                className={priceLoading ? 'loading' : ''}
                 type="submit"
+                disabled={priceLoading}
                 onClick={(e) => {
                   e.preventDefault();
                   saveNewResellPrice();
                 }}
-                value="Set price"
-              />
+              >
+                {priceLoading && (
+                  <span>
+                    <div className="spinner-border" role="status">
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                    {' '}
+                  </span>
+                )}
+                Set price
+              </button>
             </form>
           </div>
         </div>
@@ -671,14 +694,25 @@ export default function App(): JSX.Element {
                   onChange={(event) => setNewInitialPrice(event.currentTarget.value)}
                 />
               </label>
-              <input
+              <button
                 type="submit"
+                className={priceILoading ? 'loading' : ''}
+                disabled={priceILoading}
                 onClick={(e) => {
                   e.preventDefault();
                   saveNewInitialPrice();
                 }}
-                value="Set price"
-              />
+              >
+                {priceILoading && (
+                  <span>
+                    <div className="spinner-border" role="status">
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                    {' '}
+                  </span>
+                )}
+                Set price
+              </button>
             </form>
           </div>
         </div>
@@ -715,14 +749,25 @@ export default function App(): JSX.Element {
                   {currencyUnit}
                 </span>
               </div>
-              <input
+              <button
                 type="submit"
-                value="Confirm Change"
+                className={adjustLoading ? 'loading' : ''}
+                disabled={adjustLoading}
                 onClick={(e) => {
                   e.preventDefault();
                   withdrawOrDeposit();
                 }}
-              />
+              >
+                {adjustLoading && (
+                  <span>
+                    <div className="spinner-border" role="status">
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                    {' '}
+                  </span>
+                )}
+                Confirm Change
+              </button>
             </form>
           </div>
         </div>
@@ -774,14 +819,25 @@ export default function App(): JSX.Element {
                   {currencyUnit}
                 </span>
               </div>
-              <input
+              <button
                 type="submit"
-                value="Confirm Purchase"
+                className={buyLoading ? 'loading' : ''}
+                disabled={buyLoading}
                 onClick={(e) => {
                   e.preventDefault();
                   buy();
                 }}
-              />
+              >
+                {buyLoading && (
+                  <span>
+                    <div className="spinner-border" role="status">
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                    {' '}
+                  </span>
+                )}
+                Confirm Purchase
+              </button>
             </form>
           </div>
         </div>
