@@ -343,16 +343,13 @@ export default function App(): JSX.Element {
           <div className="sectionInner">
 
             <div className="artworkInfos">
-              <h2>M Carbon Dioxide</h2>
+              <h2>Efficient Market Hypothesis</h2>
               <div className="artworkDesc">
                 <p><strong>Edition 1 of 1</strong></p>
                 <p>
-                  This one of his latest works of art and represents 1000 tonnes
-                  of CO2 formerly purchased and retired as verified credit units
-                  (VCUs) on the Verra registry and minted to the blockchain as an
-                  NFT.
+                  All information is reflected in the price chart, duh!
                   <br />
-                  {!showMore && (
+                  {false && !showMore && (
                     <button id="showMore" type="button" onClick={() => setShowMore(true)}>show more</button>
                   )}
                 </p>
@@ -417,6 +414,9 @@ export default function App(): JSX.Element {
                       onClick={async () => {
                         if (!onboardState) {
                           await connectWallet();
+                          if (!onboardState) {
+                            return;
+                          }
                         }
                         setChangePriceShow(true);
                       }}
@@ -431,6 +431,9 @@ export default function App(): JSX.Element {
                       onClick={async () => {
                         if (!onboardState) {
                           await connectWallet();
+                          if (!onboardState) {
+                            return;
+                          }
                         }
                         setChangeInitialPriceShow(true);
                       }}
@@ -446,6 +449,9 @@ export default function App(): JSX.Element {
                     onClick={async () => {
                       if (!onboardState) {
                         await connectWallet();
+                        if (!onboardState) {
+                          return;
+                        }
                       }
                       setBuyShow(true);
                     }}
@@ -502,6 +508,9 @@ export default function App(): JSX.Element {
                         onClick={async () => {
                           if (!onboardState) {
                             await connectWallet();
+                            if (!onboardState) {
+                              return;
+                            }
                           }
                           setAdjustDateShow(true);
                         }}
@@ -578,7 +587,7 @@ export default function App(): JSX.Element {
                   </a>
                 </p>
                 <p>
-                  The lab10 collective eG is a registered nonprofit
+                  The lab10 collective eG is a registered non-profit
                   cooperative from Austria focusing on
                   solutions to combat climate change. Their
                   main activities are in the energy and

@@ -78,11 +78,6 @@
     padding-bottom: 90px;
   }
 
-  .logo a {
-    width: 42px;
-    height: 42px;
-  }
-
   nav ul li {
     font-size: 17px;
     margin-left: 30px;
@@ -183,9 +178,7 @@
   }
 
   .logo a {
-    width: 42px;
-    height: 42px;
-    margin: 0 auto;
+    margin: 0 auto 1rem;
   }
 
   .connectWalletButton {
@@ -228,7 +221,7 @@
 
   .artworkInfos .intro {
     padding-bottom: 50px;
-    padding-right: 30%;
+    padding-right: 0;
   }
 
   .artworkInfos .artworkDesc {

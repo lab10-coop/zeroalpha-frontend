@@ -244,8 +244,8 @@ section:last-child {
 }
 
 .logo a {
-  width: 59px;
-  height: 59px;
+  width: 60px;
+  height: 60px;
   display: block;
   background-image: url(../image/logo.svg);
   background-repeat: no-repeat;
