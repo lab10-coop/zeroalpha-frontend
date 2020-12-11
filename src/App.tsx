@@ -629,7 +629,7 @@ export default function App(): JSX.Element {
           </div>
         </section>
 
-        <footer>
+        <footer className="zaFooter">
           &copy; 2020 by
           {' '}
           <a href="https://lab10.coop/imprint/" target="_blank" rel="noreferrer" title="lab10 collective">
