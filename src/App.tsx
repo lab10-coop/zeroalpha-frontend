@@ -567,7 +567,7 @@ export default function App(): JSX.Element {
         <div className={changePriceShow ? 'overlayBox show' : 'overlayBox'}>
           <div className="innerBox">
             <button className="close" type="button" onClick={() => setChangePriceShow(false)}>X</button>
-            <h3>Change Price</h3>
+            <h3>Change</h3>
             <form>
               <label htmlFor="salePrice">
                 Re-sale price:
@@ -634,7 +634,7 @@ export default function App(): JSX.Element {
                 </span>
               </div>
               <label htmlFor="patronage">
-                Extend patronage till:
+                New patronage till:
                 <input
                   type="date"
                   name="patronage"
