@@ -552,15 +552,10 @@ export default function App(): JSX.Element {
                   </a>
                 </p>
                 <p>
-                  Sven Eberwein is a digital artist that
-                  works at the intersection of computer
-                  graphics and internet culture. His works
-                  emerge from references he collects
-                  around the „World Wild Web” and set to
-                  explore their impact and relevance in new
-                  contexts. In his words, he produces
-                  „Works of the internet, by the internet, for
-                  the internet.”
+                  Sven Eberwein is working at the intersection of computer graphics & online culture.
+                  Paramount to all his work is to be at the forefront of emerging digital trends, memes and the always
+                  evolving crypto space.
+                  Works of the internet, by the internet, for the internet.
                 </p>
               </div>
             </div>
