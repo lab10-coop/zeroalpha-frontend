@@ -139,7 +139,6 @@ export default function App(): JSX.Element {
 
   const saveNewResellPrice = async () => {
     if (!onboardState) {
-      // todo: connectWallet
       alert('No wallet connected.');
       return;
     }
@@ -160,7 +159,6 @@ export default function App(): JSX.Element {
 
   const saveNewInitialPrice = async () => {
     if (!onboardState) {
-      // todo: connectWallet
       alert('No wallet connected.');
       return;
     }
@@ -181,7 +179,6 @@ export default function App(): JSX.Element {
 
   const buy = async () => {
     if (!onboardState) {
-      // todo: connectWallet
       alert('No wallet connected.');
       return;
     }
@@ -207,7 +204,6 @@ export default function App(): JSX.Element {
       return; // do nothing
     }
     if (!onboardState) {
-      // todo: connectWallet
       alert('No wallet connected.');
       return;
     }
@@ -409,18 +405,45 @@ export default function App(): JSX.Element {
                   <span className="currency">{currencyUnit}</span>
                   {' '}
                   {onboardState && onboardState.address.toLowerCase() === owner.toLowerCase() && (
-                    <button className="changePrice" type="button" onClick={() => setChangePriceShow(true)}>
+                    <button
+                      className="changePrice"
+                      type="button"
+                      onClick={async () => {
+                        if (!onboardState) {
+                          await connectWallet();
+                        }
+                        setChangePriceShow(true);
+                      }}
+                    >
                       change
                     </button>
                   )}
                   {onboardState && onboardState.address.toLowerCase() === artist.toLowerCase() && (
-                    <button className="changePrice" type="button" onClick={() => setChangeInitialPriceShow(true)}>
+                    <button
+                      className="changePrice"
+                      type="button"
+                      onClick={async () => {
+                        if (!onboardState) {
+                          await connectWallet();
+                        }
+                        setChangeInitialPriceShow(true);
+                      }}
+                    >
                       change initial
                     </button>
                   )}
                 </p>
                 <p className="buyButton">
-                  <button id="buyButton" type="button" onClick={() => setBuyShow(true)}>
+                  <button
+                    id="buyButton"
+                    type="button"
+                    onClick={async () => {
+                      if (!onboardState) {
+                        await connectWallet();
+                      }
+                      setBuyShow(true);
+                    }}
+                  >
                     Buy
                   </button>
                 </p>
@@ -467,7 +490,16 @@ export default function App(): JSX.Element {
                     </span>
                     {' '}
                     {onboardState && onboardState.address.toLowerCase() === owner.toLowerCase() && (
-                      <button className="adjustDate" type="button" onClick={() => setAdjustDateShow(true)}>
+                      <button
+                        className="adjustDate"
+                        type="button"
+                        onClick={async () => {
+                          if (!onboardState) {
+                            await connectWallet();
+                          }
+                          setAdjustDateShow(true);
+                        }}
+                      >
                         adjust
                       </button>
                     )}
