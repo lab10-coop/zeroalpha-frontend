@@ -365,8 +365,9 @@ nav ul li a:hover {
   padding-bottom: 150px;
 }
 
-.artworkImage {
-
+.artworkImage img,
+.artworkImage video {
+  width: 100%;
 }
 
 .showMoreText {

@@ -35,6 +35,7 @@ export default function App(): JSX.Element {
   const [name, setName] = useState<string>('');
   const [symbol, setSymbol] = useState<string>('');
   const [imageUrl, setImageUrl] = useState<string>('');
+  const [mediaUrl, setMediaUrl] = useState<string>('');
   const [owner, setOwner] = useState<string>('');
   const [ownerEns, setOwnerEns] = useState<string>('');
   const [artist, setArtist] = useState<string>('');
@@ -90,9 +91,13 @@ export default function App(): JSX.Element {
 
     const ensN = await revEns(o);
 
+    setImageUrl(metaDataJson.image);
+    if (metaDataJson.media && metaDataJson.media.uri) {
+      setMediaUrl(metaDataJson.media.uri);
+    }
+
     setName(metaDataJson.name);
     setSymbol(s);
-    setImageUrl(metaDataJson.image);
     setOwner(o);
     setOwnerEns(ensN);
   };
@@ -385,9 +390,19 @@ export default function App(): JSX.Element {
             </div>
 
             <div className="artworkImage">
-              <figure>
-                <img src={imageUrl} alt={name} />
-              </figure>
+              { mediaUrl ? (
+                <figure>
+                  {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                  <video autoPlay loop muted>
+                    <source src={mediaUrl} type="video/mp4" />
+                    <img src={imageUrl} alt={name} />
+                  </video>
+                </figure>
+              ) : (
+                <figure>
+                  <img src={imageUrl} alt={name} />
+                </figure>
+              )}
             </div>
 
             <div className="clear" />

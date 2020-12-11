@@ -113,7 +113,8 @@
     text-align: right;
   }
 
-  .artworkImage img {
+  .artworkImage img,
+  .artworkImage video {
     width: 400px;
     height: auto;
   }
@@ -227,7 +228,8 @@
     padding: 0px;
   }
 
-  .artworkImage img {
+  .artworkImage img,
+  .artworkImage video {
     width: 100%;
     height: auto;
   }
