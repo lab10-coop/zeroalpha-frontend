@@ -26,6 +26,7 @@ const onboard = Onboard({
         },
         preferred: true,
       },
+      { walletName: 'status', preferred: true },
     ],
   },
 });
