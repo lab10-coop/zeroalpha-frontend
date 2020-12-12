@@ -13,6 +13,7 @@ import ownerImg from './image/owner.png';
 const networkId = parseInt(process.env.REACT_APP_CHAIN_N_ID || '', 10);
 const rpc = process.env.REACT_APP_CHAIN_RPC || '';
 const currencyUnit = process.env.REACT_APP_CURRENCY_UNI || 'xDai';
+const gasPrice = process.env.REACT_APP_CHAIN_GAS_PRICE || '1000000000';
 const onboard = Onboard({
   networkId,
   walletSelect: {
@@ -163,8 +164,7 @@ export default function App(): JSX.Element {
     setPriceLoading(true);
     const web3 = new Web3(onboardState.wallet.provider);
     await stewardContract(web3).methods.changePrice(toWei(newResellPrice)).send({
-      // todo: make gasPrice configurable?
-      gasPrice: toWei('100', 'gwei'),
+      gasPrice,
       from: onboardState.address,
     });
     setNewResellPrice(undefined);
@@ -185,8 +185,7 @@ export default function App(): JSX.Element {
     setPriceILoading(true);
     const web3 = new Web3(onboardState.wallet.provider);
     await stewardContract(web3).methods.changeInitialPrice(toWei(newInitialPrice)).send({
-      // todo: make gasPrice configurable?
-      gasPrice: toWei('100', 'gwei'),
+      gasPrice,
       from: onboardState.address,
     });
     setNewInitialPrice(undefined);
@@ -207,8 +206,7 @@ export default function App(): JSX.Element {
     setBuyLoading(true);
     const web3 = new Web3(onboardState.wallet.provider);
     await stewardContract(web3).methods.buy(toWei(newPrice), price).send({
-      // todo: make gasPrice configurable?
-      gasPrice: toWei('100', 'gwei'),
+      gasPrice,
       value: toWei((parseFloat(fromWei(price)) + buyDeposit).toString()),
       from: onboardState.address,
     });
@@ -232,22 +230,19 @@ export default function App(): JSX.Element {
     if (addWithdraw >= parseFloat(fromWei(depositLeft))) {
       // withdraw
       await stewardContract(web3).methods.exit().send({
-        // todo: make gasPrice configurable?
-        gasPrice: toWei('100', 'gwei'),
+        gasPrice,
         from: onboardState.address,
       });
     } else if (addWithdraw > 0) {
       // withdraw
       await stewardContract(web3).methods.withdrawDeposit(toWei(Math.abs(addWithdraw).toString())).send({
-        // todo: make gasPrice configurable?
-        gasPrice: toWei('100', 'gwei'),
+        gasPrice,
         from: onboardState.address,
       });
     } else {
       // deposit
       await stewardContract(web3).methods.depositWei().send({
-        // todo: make gasPrice configurable?
-        gasPrice: toWei('100', 'gwei'),
+        gasPrice,
         value: toWei(Math.abs(addWithdraw).toString()),
         from: onboardState.address,
       });
