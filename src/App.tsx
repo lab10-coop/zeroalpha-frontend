@@ -43,7 +43,7 @@ export default function App(): JSX.Element {
   const [artist, setArtist] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [initialPrice, setInitialPrice] = useState<string>('');
-  const [collected, setCollected] = useState<number>(0);
+  const [collected, setCollected] = useState<number>();
   const [foreclosureTime, setForeclosureTime] = useState<string>('');
   const [foreclosed, setForeclosed] = useState<boolean>(false);
   const [newForeclosureTime, setNewForeclosureTime] = useState<string>('');
@@ -414,7 +414,7 @@ export default function App(): JSX.Element {
               <div className="priceField">
                 <h3>Price</h3>
                 <p>
-                  <span className="priceValue">{fromWei(price)}</span>
+                  <span className="priceValue">{price ? fromWei(price) : '-'}</span>
                   &nbsp;
                   <span className="currency">{currencyUnit}</span>
                   {' '}
@@ -509,7 +509,9 @@ export default function App(): JSX.Element {
                   <p>
                     Till&nbsp;
                     <span className="patronageUntil">
-                      {new Date(parseInt(foreclosureTime, 10) * 1000).toLocaleDateString()}
+                      {foreclosureTime
+                        ? new Date(parseInt(foreclosureTime, 10) * 1000).toLocaleDateString()
+                        : '-'}
                     </span>
                     {' '}
                     {onboardState && onboardState.address.toLowerCase() === owner.toLowerCase() && (
@@ -538,7 +540,9 @@ export default function App(): JSX.Element {
                 <div className="totalPatronageField">
                   <h3>Total Patronage Collected</h3>
                   <p>
-                    <span className="totalPatronageAmount">{collected.toFixed(10)}</span>
+                    <span className="totalPatronageAmount">
+                      {collected ? collected.toFixed(10) : '-'}
+                    </span>
                     &nbsp;
                     <span className="currency">{currencyUnit}</span>
                   </p>
