@@ -610,20 +610,50 @@ export default function App(): JSX.Element {
                 <p>
                   <strong>Focus SDG:</strong>
                   {' '}
-                  <span className="sdg" id="sdg-7">7</span>
+                  <a className="sdg" href="https://sdgs.un.org/goals/goal7" target="_blank" rel="noreferrer" id="sdg-7">
+                    7
+                  </a>
                 </p>
                 <p>
                   <strong>Other SDG&apos;s:</strong>
                   {' '}
-                  <span className="sdg" id="sdg-13">13</span>
+                  <a
+                    className="sdg"
+                    href="https://sdgs.un.org/goals/goal13"
+                    target="_blank"
+                    rel="noreferrer"
+                    id="sdg-13"
+                  >
+                    13
+                  </a>
                   {' '}
-                  <span className="sdg" id="sdg-2">2</span>
+                  <a className="sdg" href="https://sdgs.un.org/goals/goal2" target="_blank" rel="noreferrer" id="sdg-2">
+                    2
+                  </a>
                   {' '}
-                  <span className="sdg" id="sdg-11">11</span>
+                  <a
+                    className="sdg"
+                    href="https://sdgs.un.org/goals/goal11"
+                    target="_blank"
+                    rel="noreferrer"
+                    id="sdg-11"
+                  >
+                    11
+                  </a>
                   {' '}
-                  <span className="sdg" id="sdg-15">15</span>
+                  <a
+                    className="sdg"
+                    href="https://sdgs.un.org/goals/goal15"
+                    target="_blank"
+                    rel="noreferrer"
+                    id="sdg-15"
+                  >
+                    15
+                  </a>
                   {' '}
-                  <span className="sdg" id="sdg-8">8</span>
+                  <a className="sdg" href="https://sdgs.un.org/goals/goal8" target="_blank" rel="noreferrer" id="sdg-8">
+                    8
+                  </a>
                 </p>
               </div>
 
