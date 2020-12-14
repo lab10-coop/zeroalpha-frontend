@@ -9,6 +9,7 @@ import nftContract, { id as tokenId } from './contract-instances/nft';
 import artistImg from './image/artist-sven-eberwein.png';
 import lab10Img from './image/lab10-logo.png';
 import ownerImg from './image/owner.png';
+import artwork from './artwork/EfficientMarkets.mp4';
 
 const networkId = parseInt(process.env.REACT_APP_CHAIN_N_ID || '', 10);
 const rpc = process.env.REACT_APP_CHAIN_RPC || '';
@@ -385,19 +386,14 @@ export default function App(): JSX.Element {
             </div>
 
             <div className="artworkImage">
-              { mediaUrl ? (
-                <figure>
-                  {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+              <figure>
+                {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                <a href={mediaUrl || imageUrl}>
                   <video autoPlay loop muted>
-                    <source src={mediaUrl} type="video/mp4" />
-                    <img src={imageUrl} alt={name} />
+                    <source src={artwork} type="video/mp4" />
                   </video>
-                </figure>
-              ) : (
-                <figure>
-                  <img src={imageUrl} alt={name} />
-                </figure>
-              )}
+                </a>
+              </figure>
             </div>
 
             <div className="clear" />
