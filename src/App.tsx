@@ -111,6 +111,8 @@ export default function App(): JSX.Element {
     const fT = await stewardContract().methods.foreclosureTime().call();
     const f = await stewardContract().methods.foreclosed().call();
     const d = await stewardContract().methods.depositAbleToWithdraw().call();
+    const c = await stewardContract().methods.totalCollected().call();
+    const o = await stewardContract().methods.patronageOwed().call();
 
     setArtist(a);
     // if foreclosed true price should be initialPrice.
@@ -119,17 +121,14 @@ export default function App(): JSX.Element {
     setForeclosureTime(fT);
     setForeclosed(f);
     setDepositLeft(d);
+    setCollected(f ? parseFloat(fromWei(c)) : parseFloat(fromWei(c)) + parseFloat(fromWei(o)));
 
     const web3 = new Web3(process.env.REACT_APP_CHAIN_RPC_WS || '');
     web3.eth.subscribe('newBlockHeaders', async () => {
       const forec = await stewardContract().methods.foreclosed().call();
-      const c = await stewardContract(web3).methods.totalCollected().call();
-      const o = await stewardContract(web3).methods.patronageOwed().call();
-      if (forec) {
-        setCollected(parseFloat(fromWei(c)));
-      } else {
-        setCollected(parseFloat(fromWei(c)) + parseFloat(fromWei(o)));
-      }
+      const co = await stewardContract(web3).methods.totalCollected().call();
+      const ow = await stewardContract(web3).methods.patronageOwed().call();
+      setCollected(forec ? parseFloat(fromWei(co)) : parseFloat(fromWei(co)) + parseFloat(fromWei(ow)));
     });
   };
 
