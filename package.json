@@ -6,6 +6,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build.staging": "env-cmd -f .env.staging react-scripts build",
+    "build.production": "env-cmd -f .env.production react-scripts build",
     "typechain": "typechain --target web3-v1 --outDir src/contract-types/ './src/abi/*'",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint 'src/**/*.{ts,tsx}'"
@@ -42,6 +44,7 @@
     "@types/react-dom": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
+    "env-cmd": "^10.1.0",
     "eslint": "^7.14.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.22.1",
